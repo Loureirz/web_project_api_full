@@ -73,11 +73,9 @@ export default class FormValidator {
     if (this._hasInvalidInput()) {
       this._submitButton.classList.add(this._config.inactiveButtonClass);
       this._submitButton.setAttribute('disabled', true);
-      console.log('Botão de submit desativado');
     } else {
       this._submitButton.classList.remove(this._config.inactiveButtonClass);
       this._submitButton.removeAttribute('disabled');
-      console.log('Botão de submit ativado');
     }
   }
 
