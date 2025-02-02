@@ -21,6 +21,7 @@ module.exports = [
       "no-underscore-dangle": "off",
       "no-console": "off",
       "linebreak-style": "off",
+      "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
     },
   },
 ];
