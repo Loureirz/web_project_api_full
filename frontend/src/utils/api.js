@@ -70,7 +70,7 @@ class Api {
     }
 
     addLikes(cardId) {
-      return fetch(`https://around.nomoreparties.co/v1/web-ptbr-cohort-10/cards/likes/${cardId}`, {
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: "PUT",
         headers: {
           authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
@@ -86,7 +86,7 @@ class Api {
     }
 
     removeLike(cardId) {
-      return fetch(`https://around.nomoreparties.co/v1/web-ptbr-cohort-10/cards/likes/${cardId}`, {
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: "DELETE",
         headers: {
           authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
@@ -102,7 +102,7 @@ class Api {
     }
 
     removeCard(cardId) {
-      return fetch(`https://around.nomoreparties.co/v1/web-ptbr-cohort-10/cards/likes/${cardId}`, {
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: "DELETE",
         headers: {
           authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
@@ -118,7 +118,7 @@ class Api {
     }
 
     editAvatar({avatar}) {
-      return fetch(`https://around.nomoreparties.co/v1/web-ptbr-cohort-10/users/me/avatar`, {
+      return fetch(`${this._baseUrl}/users/me/avatar`, {
         method: "PATCH",
         headers: {
           authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
@@ -140,7 +140,7 @@ class Api {
     }
 
     const api = new Api({
-        baseUrl: "https://around.nomoreparties.co/v1/web-ptbr-cohort-10",
+        baseUrl: "https://web-project-api-full-daen.onrender.com",
         headers: {
           authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
           "Content-Type": "application/json"
