@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/web_project_around_react/static/css/main.ad3612b5.css",
+    "main.js": "/web_project_around_react/static/js/main.dc871bfa.js",
+    "static/js/453.8d428687.chunk.js": "/web_project_around_react/static/js/453.8d428687.chunk.js",
+    "static/media/image.jpg": "/web_project_around_react/static/media/image.c15cb08ab8ecfaba54c6.jpg",
+    "static/media/logo.svg": "/web_project_around_react/static/media/logo.4e8e0a1d604782a0dff8e5b1a5441e4d.svg",
+    "static/media/heart.svg": "/web_project_around_react/static/media/heart.3826c074a1b94b101e38.svg",
+    "index.html": "/web_project_around_react/index.html",
+    "static/media/Trash.svg": "/web_project_around_react/static/media/Trash.c4956c32989e66228de8d03a901d4be3.svg",
+    "static/media/like.svg": "/web_project_around_react/static/media/like.226461bd64622361ffb2.svg",
+    "static/media/close.svg": "/web_project_around_react/static/media/close.81d0f6a6ee1da3d7d7d2350048e7dcab.svg",
+    "static/media/vector.svg": "/web_project_around_react/static/media/vector.8667ac4a523e8fc42e59641845fc8448.svg",
+    "static/media/edit.svg": "/web_project_around_react/static/media/edit.a086f758840ae814ecde.svg",
+    "static/media/vectoradd.svg": "/web_project_around_react/static/media/vectoradd.d86bb2edc2f6eadb96b785d29c82b56e.svg",
+    "main.ad3612b5.css.map": "/web_project_around_react/static/css/main.ad3612b5.css.map",
+    "main.dc871bfa.js.map": "/web_project_around_react/static/js/main.dc871bfa.js.map",
+    "453.8d428687.chunk.js.map": "/web_project_around_react/static/js/453.8d428687.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ad3612b5.css",
+    "static/js/main.dc871bfa.js"
+  ]
+}
