@@ -6,8 +6,11 @@ const cardsRouter = require("./routes/cards.js");
 const app = express();
 const { requestLogger, errorLogger } = require("./middlewares/logger.js");
 require("dotenv").config();
+const cors = require("cors");
 
-const { PORT = 3000 } = process.env;
+app.use(cors());
+app.options('*', cors());
+app.use(express.json());
 
 mongoose.connect(process.env.CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Banco de dados conectado!"))
@@ -16,13 +19,23 @@ mongoose.connect(process.env.CONNECTION, { useNewUrlParser: true, useUnifiedTopo
     process.exit(1); // Encerra a aplicação caso a conexão falhe
   });
 
-app.get("/", (req, res) => {
-  res.send("Bem-vindo à API!");
+const { PORT = 3000 } = process.env;
+
+app.use(requestLogger);
+
+app.use(function (req, res, next) {
+
+  if (req.originalUrl === '/users/signin' || req.originalUrl === '/users/signup') {
+    return next();
+  } else {
+    return auth(req, res, next);
+  }
 });
 
-app.use(express.json());
 app.use("/users", usersRouter);
 app.use("/cards", cardsRouter);
+
+app.use(errorLogger);
 
 app.use((err, req, res, next) => {
   console.error(err); // Exibe o erro no console
@@ -30,5 +43,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando na porta: ${PORT}`);
 });
