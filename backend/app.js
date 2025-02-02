@@ -9,8 +9,8 @@ require("dotenv").config();
 
 const { PORT = 3000 } = process.env;
 
-mongoose.connect("mongodb://localhost:27017/aroundb", { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("Conectado ao MongoDB!"))
+mongoose.connect(process.env.CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Banco de dados conectado!"))
   .catch((err) => {
     console.error("Erro de conexão com o MongoDB:", err);
     process.exit(1); // Encerra a aplicação caso a conexão falhe
