@@ -45,7 +45,7 @@ export const signin = async (email, password) => {
     const { token } = await response.json();
 
     localStorage.setItem("jwt", token);
-    return token; // Retorna o token explicitamente
+    return token;
   } catch (error) {
     throw error;
   }
