@@ -24,8 +24,8 @@ const { PORT = 3000 } = process.env;
 app.use(requestLogger);
 
 app.use(function (req, res, next) {
-
-  if (req.originalUrl === '/users/signin' || req.originalUrl === '/users/signup') {
+  console.log("Teste:", req.path);
+  if (req.path === '/users/signin' || req.path === '/users/signup') {
     return next();
   } else {
     return auth(req, res, next);
