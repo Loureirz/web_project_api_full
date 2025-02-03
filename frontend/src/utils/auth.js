@@ -3,7 +3,7 @@ const BASE_URL = "https://web-project-api-full-daen.onrender.com";
 export const signup = async (email, password) => {
   try {
 
-    const response = await fetch(`${BASE_URL}/signup`, {
+    const response = await fetch(`${BASE_URL}/users/signup`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -28,7 +28,7 @@ export const signup = async (email, password) => {
 export const signin = async (email, password) => {
   try {
 
-    const response = await fetch(`${BASE_URL}/signin`, {
+    const response = await fetch(`${BASE_URL}/users/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
