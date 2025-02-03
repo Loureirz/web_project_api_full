@@ -48,11 +48,8 @@ function App() {
           localStorage.removeItem("jwt");
           setLoggedIn(false);
         });
-    } else {
-      setLoggedIn(false);
-    }
 
-    api
+        api
       .getUserInfo()
       .then((data) => {
         setCurrentUser(data);
@@ -65,7 +62,11 @@ function App() {
       .getInitialCards()
       .then(setCards)
       .catch((error) => console.log('Erro ao obter dados dos cards:', error));
-  }, []);
+
+    } else {
+      setLoggedIn(false);
+    }
+  }, [loggedIn]);
 
     const handleUpdateUser = (userData) => {
       if (!userData.name || !userData.about) {
