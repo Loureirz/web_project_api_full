@@ -1,4 +1,4 @@
-import { BrowserRouter, Router, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import Header from "./Header.jsx";
 import Main from "./Main.jsx";
 import Footer from "./Footer.jsx";
@@ -16,7 +16,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import * as auth from "../utils/auth.js";
 import * as token from "../utils/token.js";
 
-
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -33,6 +32,7 @@ function App() {
   const [userEmail, setUserEmail] = useState(
     localStorage.getItem("userEmail") || ""
   );
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -92,14 +92,16 @@ function App() {
     };*/
 
     const handleLogin = (email, password) => {
+
       auth
         .signin(email, password)
           .then((data) => {
+            console.log("Resposta da API:", data);
             if (data.token) {
               token.setToken(data.token);
               setLoggedIn(true);
               setUserEmail(email);
-              Navigate("/");
+              navigate("/");
             }
           })
           .catch((error) => console.log(error));
@@ -204,7 +206,6 @@ const handleAddPlaceSubmit = (newCardData) => {
   }
 
   return (
-    <BrowserRouter>
     <div className="page">
       <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser, handleUpdateAvatar}}>
       <Header 
@@ -265,7 +266,6 @@ const handleAddPlaceSubmit = (newCardData) => {
       <Footer />
       </CurrentUserContext.Provider>
   </div>
-  </BrowserRouter>
   );
 
 }
