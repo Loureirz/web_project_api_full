@@ -1,12 +1,21 @@
+import * as token from "./token.js";
+
 class Api {
     constructor(options) {
       this._baseUrl = options.baseUrl;
       this._headers = options.headers;
     }
 
-    getInitialCards() {
+    _getAuthorizationHeaders() {
+      return {
+        ...this._headers,
+        authorization: `Bearer ${token.getToken()}`,
+      }
+    }
+
+    /*getInitialCards() {
       return fetch(`${this._baseUrl}/cards`, {
-        headers: this._headers
+        headers: this._getAuthorizationHeaders(),
       })
         .then(res => {
           if (res.ok){
@@ -14,7 +23,7 @@ class Api {
           }
           return Promise.reject(`Error: ${res.status}`);
         });
-    }
+    }*/
 
     getUserInfo() {
       return fetch(`${this._baseUrl}/users/me`, {
@@ -31,7 +40,7 @@ class Api {
     editUserInfo({ name, about }) {
       return fetch(`${this._baseUrl}/users/me`, {
         method: "PATCH",
-        headers: this._headers,
+        headers: this._getAuthorizationHeaders(),
         body: JSON.stringify({
           name: name,
           about: about,
@@ -49,13 +58,10 @@ class Api {
         });
     }
     
-    
-    
-
     addCard({name, link}) {
       return fetch(`${this._baseUrl}/cards`, {
         method: "POST",
-        headers: this._headers,
+        headers: this._getAuthorizationHeaders(),
         body: JSON.stringify({
           name: name,
           link: link,
@@ -72,10 +78,7 @@ class Api {
     addLikes(cardId) {
       return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: "PUT",
-        headers: {
-          authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
-          "Content-Type": "application/json"
-        },
+        headers: this._getAuthorizationHeaders(),
       }).then((res) => {
         if (res.ok) {
           return res.json();
@@ -88,10 +91,7 @@ class Api {
     removeLike(cardId) {
       return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: "DELETE",
-        headers: {
-          authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
-          "Content-Type": "application/json"
-        },
+        headers: this._getAuthorizationHeaders(),
       }).then((res) => {
         if (res.ok) {
           return res.json();
@@ -104,10 +104,7 @@ class Api {
     removeCard(cardId) {
       return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: "DELETE",
-        headers: {
-          authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
-          "Content-Type": "application/json"
-        },
+        headers: this._getAuthorizationHeaders(),
       }).then((res) => {
         if (res.ok) {
           return res.json();
@@ -120,10 +117,7 @@ class Api {
     editAvatar({avatar}) {
       return fetch(`${this._baseUrl}/users/me/avatar`, {
         method: "PATCH",
-        headers: {
-          authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
-          "Content-Type": "application/json"
-        },
+        headers: this._getAuthorizationHeaders(),
         body: JSON.stringify({ avatar: avatar }),
       }).then((res) => {
         if (res.ok) {
@@ -142,7 +136,6 @@ class Api {
     const api = new Api({
         baseUrl: "https://web-project-api-full-daen.onrender.com",
         headers: {
-          authorization: "cc445779-d6db-4667-8701-d2576b6346ad",
           "Content-Type": "application/json"
         }
       });

@@ -14,7 +14,7 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import ConfirmationPopup from "./RemoveCard.jsx";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import * as auth from "../utils/auth.js";
-
+import * as token from "../utils/token.js";
 
 
 function App() {
@@ -84,12 +84,26 @@ function App() {
         });
     };
 
-    const handleLogin = (email) => {
+    /*const handleLogin = (email) => {
       setLoggedIn(true);
       setUserEmail(email);
       localStorage.setItem("loggedIn", "true");
       localStorage.setItem("userEmail", email);
-    };
+    };*/
+
+    const handleLogin = (email, password) => {
+      auth
+        .signin(email, password)
+          .then((data) => {
+            if (data.token) {
+              token.setToken(data.token);
+              setLoggedIn(true);
+              setUserEmail(email);
+              Navigate("/");
+            }
+          })
+          .catch((error) => console.log(error));
+    }
   
     const handleLogout = () => {
       setLoggedIn(false);

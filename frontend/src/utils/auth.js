@@ -53,7 +53,7 @@ export const signin = async (email, password) => {
 
 export const checkToken = async (token) => {
   try {
-    const token = localStorage.getItem("jwt");
+    token = localStorage.getItem("jwt");
     const response = await fetch(`${BASE_URL}/users/me`, {
       method: "GET",
       headers: {
