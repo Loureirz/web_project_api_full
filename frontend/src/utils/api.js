@@ -136,6 +136,7 @@ class Api {
     const api = new Api({
         baseUrl: "https://web-project-api-full-daen.onrender.com",
         headers: {
+          authorization: token.getToken(),
           "Content-Type": "application/json"
         }
       });
