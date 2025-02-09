@@ -63,7 +63,7 @@ const Login = ({ handleLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(formData);
+    handleLogin(formData.email, formData.password);
   }
 
   // Habilita validação do formulário
