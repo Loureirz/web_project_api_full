@@ -174,10 +174,10 @@ const handleAddPlaceSubmit = (newCardData) => {
 
   useEffect(() => {
     try {
-      const token = token.getToken();  // Tenta obter o token
-      if (token) {
+      const jwt = token.getToken();  // Tenta obter o token
+      if (jwt) {
         // Se o token existir, verifica a autenticidade
-        auth.checkToken(token).then((data) => {
+        auth.checkToken(jwt).then((data) => {
           console.log("Usuário autenticado:", data);
           setLoggedIn(true);
           setUserEmail(data.data.email);
