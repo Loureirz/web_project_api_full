@@ -56,13 +56,14 @@ function App() {
 
     const handleUpdateUser = async (data) => {
       try {
-        const newData = await api.editUserInfo(data.name, data.about);
+        const newData = await api.editUserInfo({ name: data.name, about: data.about });
+        console.log("Usuário atualizado da API:", newData); // Verifica o retorno da API
         setCurrentUser(newData);
         closeAllPopups();
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao atualizar perfil:", error);
       }
-    }
+    };
 
     const handleLogin = async (email, password) => {
       if (!email || !password) {
