@@ -62,8 +62,8 @@ function App() {
     
       try {
         const data = await auth.signin(email, password);
-        if (data) {
-          token.setToken(data);  // Aqui está o armazenamento do token.
+        if (data && data.token) {
+          token.setToken(data.token);  // Aqui está o armazenamento do token.
           console.log("Token armazenado:", token.getToken());
           setLoggedIn(true);
           setUserEmail(email);
