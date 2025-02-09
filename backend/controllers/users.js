@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
@@ -109,6 +108,8 @@ const login = async (req, res, next) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return next(Object.assign(new Error('E-mail ou senha incorretos'), { statusCode: 401 }));
     }
+
+    console.log("JWT_SECRET:", process.env.JWT_SECRET);
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 

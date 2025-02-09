@@ -1,18 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const auth = require("./middlewares/auth.js")
+const auth = require("./middlewares/auth.js");
+const cors = require("cors");
 const usersRouter = require("./routes/users.js");
 const cardsRouter = require("./routes/cards.js");
 const app = express();
 const { requestLogger, errorLogger } = require("./middlewares/logger.js");
 require("dotenv").config();
-const cors = require("cors");
 
 app.use(cors());
 /*app.options('*', cors());*/
 app.use(express.json());
 
-mongoose.connect(process.env.CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION)
   .then(() => console.log("Banco de dados conectado!"))
   .catch((err) => {
     console.error("Erro de conexão com o MongoDB:", err);
