@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import buttonPic from "../images/vector.svg";
 import buttonAddPic from "../images/vectoradd.svg";
 import close from "../images/close.svg";
@@ -11,19 +10,22 @@ export default function Main({cards, onEditAvatarClick, isEditAvatarPopupOpen, o
 
   const { currentUser } = useContext(CurrentUserContext);
 
+  if(!currentUser){
+    return null;
+ }
 
   return (
         <main className="main">
       <section className="profile">
         <button type="button" className="profile__image-edit" onClick={onEditAvatarClick}>
-          <img src={currentUser.avatar} alt="Foto Profile" className="profile__image"/>
+          <img src={currentUser.data.avatar} alt="Foto Profile" className="profile__image"/>
         </button>
         <div className="profile__info">
-          <h4 className="profile__info-name">{currentUser.name}</h4>
+          <h4 className="profile__info-name">{currentUser.data.name}</h4>
           <button className="profile__info-button" onClick={onEditProfileClick}>
             <img src={buttonPic} alt="Button Image" className="profile__info-button-image"/>
           </button>
-          <p className="profile__info-text">{currentUser.about}</p>
+          <p className="profile__info-text">{currentUser.data.about}</p>
 
 
         </div>

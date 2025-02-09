@@ -1,13 +1,25 @@
+// token.js
 const tokenKey = "user-token";
 
 export const setToken = (token) => {
-    return localStorage.setItem(tokenKey, token);
+    if (token) {
+        localStorage.setItem(tokenKey, token);
+        console.log("Token armazenado:", token);
+    } else {
+        console.error("Tentativa de armazenar token vazio.");
+    }
 };
 
 export const getToken = () => {
-    return localStorage.getItem(tokenKey);
+    const token = localStorage.getItem(tokenKey);
+    console.log("Token recuperado do storage:", token);
+    if (!token) {
+        throw new Error("Token não encontrado ou está vazio.");
+    }
+    return token;
 };
 
 export const removeToken = () => {
-    return localStorage.removeItem(tokenKey);
-}
+    localStorage.removeItem(tokenKey);
+    console.log("Token removido.");
+};

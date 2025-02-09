@@ -55,9 +55,6 @@ function App() {
     };*/
 
     const handleLogin = async (email, password) => {
-      console.log("Email:", email);
-      console.log("Password:", password);
-    
       if (!email || !password) {
         console.error("Erro: Email ou senha não foram fornecidos!");
         return;
@@ -65,23 +62,22 @@ function App() {
     
       try {
         const data = await auth.signin(email, password);
-        console.log("Resposta da API:", data);
-    
-        if (data.token) {
-          token.setToken(data.token);
-          console.log("Token armazenado:", token.getToken()); // Confirmação
+        if (data) {
+          token.setToken(data);  // Aqui está o armazenamento do token.
+          console.log("Token armazenado:", token.getToken());
           setLoggedIn(true);
           setUserEmail(email);
           navigate("/");
+        } else {
+          console.error("Erro: Token não encontrado.");
         }
       } catch (error) {
         console.error("Erro ao fazer login:", error);
       }
-    };
+    };    
     
-  
     const handleLogout = () => {
-      removeToken();
+      /*removeToken();*/
       setLoggedIn(false);
     };
 
@@ -177,22 +173,25 @@ const handleAddPlaceSubmit = (newCardData) => {
   }
 
   useEffect(() => {
-    const jwt = token.getToken();
-    console.log("Token recuperado do storage:", jwt);
-  
-    if (jwt) {
-      auth
-        .checkToken(jwt)
-        .then((data) => {
+    try {
+      const token = token.getToken();  // Tenta obter o token
+      if (token) {
+        // Se o token existir, verifica a autenticidade
+        auth.checkToken(token).then((data) => {
           console.log("Usuário autenticado:", data);
-          setUserEmail(data.data.email);
           setLoggedIn(true);
+          setUserEmail(data.data.email);
           setCurrentUser(data);
-          navigate("/");
-        })
-        .catch(console.error);
+        }).catch(err => {
+          console.error("Erro na verificação do token:", err);
+          setLoggedIn(false);
+        });
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar token:", error);
+      setLoggedIn(false);
     }
-  }, [loggedIn]);
+  }, []);
 
   return (
     <div className="page">
