@@ -195,7 +195,7 @@ const handleAddPlaceSubmit = (newCardData) => {
       console.error("Erro ao recuperar token:", error.message);
       setLoggedIn(false);
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="page">
