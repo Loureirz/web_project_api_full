@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const auth = require("./middlewares/auth.js");
@@ -6,7 +7,6 @@ const usersRouter = require("./routes/users.js");
 const cardsRouter = require("./routes/cards.js");
 const app = express();
 const { requestLogger, errorLogger } = require("./middlewares/logger.js");
-require("dotenv").config();
 
 app.use(cors());
 /*app.options('*', cors());*/
