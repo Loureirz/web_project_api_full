@@ -13,6 +13,8 @@ export default function Main({cards, onEditAvatarClick, isEditAvatarPopupOpen, o
   if(!currentUser){
     return null;
  }
+ 
+ console.log("Cards no Main:", cards);
 
   return (
         <main className="main">

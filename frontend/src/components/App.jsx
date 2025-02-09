@@ -184,7 +184,7 @@ const handleAddPlaceSubmit = (newCardData) => {
           setCurrentUser(data);
           navigate("/");
           api.getInitialCards().then(data=>{
-            setCards(data.data);
+            setCards(data);
           })
         }).catch(err => {
           console.error("Erro na verificação do token:", err);
