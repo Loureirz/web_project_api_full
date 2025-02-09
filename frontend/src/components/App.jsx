@@ -30,26 +30,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false); 
   const [userEmail, setUserEmail] = useState({ email: "" });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const jwt = token.getToken();
-    console.log("Token recuperado do storage:", jwt);
   
-    if (jwt) {
-      auth
-        .checkToken(jwt)
-        .then((data) => {
-          console.log("Usuário autenticado:", data);
-          setUserEmail(data.data.email);
-          setLoggedIn(true);
-          setCurrentUser(data);
-          navigate("/");
-        })
-        .catch(console.error);
-    }
-  }, [loggedIn]);
-  
-
     const handleUpdateUser = (userData) => {
       if (!userData.name || !userData.about) {
         console.log('Erro: nome ou descrição ausentes');
@@ -194,6 +175,24 @@ const handleAddPlaceSubmit = (newCardData) => {
     setIsEditProfilePopupOpen(false);
     setSelectedCard(null);
   }
+
+  useEffect(() => {
+    const jwt = token.getToken();
+    console.log("Token recuperado do storage:", jwt);
+  
+    if (jwt) {
+      auth
+        .checkToken(jwt)
+        .then((data) => {
+          console.log("Usuário autenticado:", data);
+          setUserEmail(data.data.email);
+          setLoggedIn(true);
+          setCurrentUser(data);
+          navigate("/");
+        })
+        .catch(console.error);
+    }
+  }, [loggedIn]);
 
   return (
     <div className="page">
