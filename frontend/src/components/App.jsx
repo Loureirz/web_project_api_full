@@ -188,7 +188,7 @@ const handleAddPlaceSubmit = (newCardData) => {
         });
       }
     } catch (error) {
-      console.error("Erro ao recuperar token:", error);
+      console.error("Erro ao recuperar token:", error.message);
       setLoggedIn(false);
     }
   }, []);
