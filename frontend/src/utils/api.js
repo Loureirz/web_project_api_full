@@ -13,7 +13,7 @@ class Api {
       }
     }
 
-    /*getInitialCards() {
+    getInitialCards() {
       return fetch(`${this._baseUrl}/cards`, {
         headers: this._getAuthorizationHeaders(),
       })
@@ -23,7 +23,7 @@ class Api {
           }
           return Promise.reject(`Error: ${res.status}`);
         });
-    }*/
+    }
 
     getUserInfo() {
       return fetch(`${this._baseUrl}/users/me`, {

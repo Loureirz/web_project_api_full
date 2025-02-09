@@ -182,6 +182,9 @@ const handleAddPlaceSubmit = (newCardData) => {
           setLoggedIn(true);
           setUserEmail(data.data.email);
           setCurrentUser(data);
+          api.getInitialCards().then(data=>{
+            setCards(data.data);
+          })
         }).catch(err => {
           console.error("Erro na verificação do token:", err);
           setLoggedIn(false);
