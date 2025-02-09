@@ -77,7 +77,7 @@ function App() {
     };    
     
     const handleLogout = () => {
-      /*removeToken();*/
+      removeToken();
       setLoggedIn(false);
     };
 
@@ -182,6 +182,7 @@ const handleAddPlaceSubmit = (newCardData) => {
           setLoggedIn(true);
           setUserEmail(data.data.email);
           setCurrentUser(data);
+          navigate("/");
           api.getInitialCards().then(data=>{
             setCards(data.data);
           })
