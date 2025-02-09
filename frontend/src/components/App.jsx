@@ -31,7 +31,7 @@ function App() {
   const [userEmail, setUserEmail] = useState({ email: "" });
   const navigate = useNavigate();
   
-    const handleUpdateUser = (userData) => {
+    /*const handleUpdateUser = (userData) => {
       if (!userData.name || !userData.about) {
         console.log('Erro: nome ou descrição ausentes');
         return; // Não envia a requisição se os dados estiverem incompletos
@@ -47,12 +47,22 @@ function App() {
         });
     };
 
-    /*const handleLogin = (email) => {
+    const handleLogin = (email) => {
       setLoggedIn(true);
       setUserEmail(email);
       localStorage.setItem("loggedIn", "true");
       localStorage.setItem("userEmail", email);
     };*/
+
+    const handleUpdateUser = async (data) => {
+      try {
+        const newData = await api.editUserInfo(data.name, data.about);
+        setCurrentUser(newData);
+        closeAllPopups();
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     const handleLogin = async (email, password) => {
       if (!email || !password) {
