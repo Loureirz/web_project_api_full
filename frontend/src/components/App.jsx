@@ -33,24 +33,22 @@ function App() {
 
   useEffect(() => {
     const jwt = token.getToken();
-
+    console.log("Token recuperado do storage:", jwt);
+  
     if (jwt) {
-
       auth
         .checkToken(jwt)
-        .then(( data ) => {
+        .then((data) => {
+          console.log("Usuário autenticado:", data);
           setUserEmail(data.data.email);
           setLoggedIn(true);
           setCurrentUser(data);
           navigate("/");
-          api.getInitialCards().then(data=> {
-            setCards(data.data);
-          });
         })
         .catch(console.error);
-        }
-        
-      }, [loggedIn]);
+    }
+  }, [loggedIn]);
+  
 
     const handleUpdateUser = (userData) => {
       if (!userData.name || !userData.about) {
@@ -90,6 +88,7 @@ function App() {
     
         if (data.token) {
           token.setToken(data.token);
+          console.log("Token armazenado:", token.getToken()); // Confirmação
           setLoggedIn(true);
           setUserEmail(email);
           navigate("/");
