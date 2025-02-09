@@ -15,6 +15,7 @@ import ConfirmationPopup from "./RemoveCard.jsx";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import * as auth from "../utils/auth.js";
 import * as token from "../utils/token.js";
+import { removeToken } from "../utils/token.js";
 
 function App() {
 
@@ -24,49 +25,32 @@ function App() {
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [cardToDelete, setCardToDelete] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [currentUser, setCurrentUser] = useState({ name: "", about: "" });
+  const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(
-    localStorage.getItem("loggedIn") ? true : false
-  ); 
-  const [userEmail, setUserEmail] = useState(
-    localStorage.getItem("userEmail") || ""
-  );
+  const [loggedIn, setLoggedIn] = useState(false); 
+  const [userEmail, setUserEmail] = useState({ email: "" });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (token) {
+    const jwt = token.getToken();
+
+    if (jwt) {
+
       auth
-        .checkToken(token)
-        .then(() => {
+        .checkToken(jwt)
+        .then(( data ) => {
+          setUserEmail(data.data.email);
           setLoggedIn(true);
-          setUserEmail(localStorage.getItem("userEmail"));
+          setCurrentUser(data);
+          navigate("/");
+          api.getInitialCards().then(data=> {
+            setCards(data.data);
+          });
         })
-        .catch((error) => {
-          console.error("Erro ao verificar token:", error);
-          localStorage.removeItem("jwt");
-          setLoggedIn(false);
-        });
-
-        api
-      .getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((error) => {
-        console.error('Erro ao obter dados do usuário:', error);
-      });
-  
-    api
-      .getInitialCards()
-      .then(setCards)
-      .catch((error) => console.log('Erro ao obter dados dos cards:', error));
-
-    } else {
-      setLoggedIn(false);
-    }
-  }, [loggedIn]);
+        .catch(console.error);
+        }
+        
+      }, [loggedIn]);
 
     const handleUpdateUser = (userData) => {
       if (!userData.name || !userData.about) {
@@ -91,27 +75,34 @@ function App() {
       localStorage.setItem("userEmail", email);
     };*/
 
-    const handleLogin = (email, password) => {
-
-      auth
-        .signin(email, password)
-          .then((data) => {
-            console.log("Resposta da API:", data);
-            if (data.token) {
-              token.setToken(data.token);
-              setLoggedIn(true);
-              setUserEmail(email);
-              navigate("/");
-            }
-          })
-          .catch((error) => console.log(error));
-    }
+    const handleLogin = async (email, password) => {
+      console.log("Email:", email);
+      console.log("Password:", password);
+    
+      if (!email || !password) {
+        console.error("Erro: Email ou senha não foram fornecidos!");
+        return;
+      }
+    
+      try {
+        const data = await auth.signin(email, password);
+        console.log("Resposta da API:", data);
+    
+        if (data.token) {
+          token.setToken(data.token);
+          setLoggedIn(true);
+          setUserEmail(email);
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Erro ao fazer login:", error);
+      }
+    };
+    
   
     const handleLogout = () => {
+      removeToken();
       setLoggedIn(false);
-      setUserEmail("");
-      localStorage.removeItem("loggedIn");
-      localStorage.removeItem("userEmail");
     };
 
     const handleUpdateAvatar = (data) => {
@@ -214,14 +205,10 @@ const handleAddPlaceSubmit = (newCardData) => {
         handleLogout={handleLogout}
       />
       <Routes>
-      <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
-      <Route path="/signup" element={<Register />} />
       <Route
     path="/"
     element={
-      <ProtectedRoute
-        loggedIn={loggedIn}
-      >
+      <ProtectedRoute loggedIn={loggedIn}>
         <Main
           cards={cards}
           onEditAvatarClick={handleEditAvatarClick}
@@ -238,6 +225,8 @@ const handleAddPlaceSubmit = (newCardData) => {
         </ProtectedRoute>
     }
   />
+  <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
+  <Route path="/signup" element={<Register />} />
   <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <EditProfile

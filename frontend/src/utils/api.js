@@ -117,7 +117,7 @@ class Api {
     editAvatar({avatar}) {
       return fetch(`${this._baseUrl}/users/me/avatar`, {
         method: "PATCH",
-        headers: this._getAuthorizationHeaders(),
+        headers: this._getAuthorizationHeaders,
         body: JSON.stringify({ avatar: avatar }),
       }).then((res) => {
         if (res.ok) {

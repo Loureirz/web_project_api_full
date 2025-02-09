@@ -31,7 +31,7 @@ const Login = ({ handleLogin }) => {
   };
 
   // Submete o formulário para autenticação
-  const handleSubmit = (e) => {
+  /*const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = formData;
 
@@ -59,7 +59,12 @@ const Login = ({ handleLogin }) => {
         setIsSuccess(false);
         setMessage("Ops, algo deu errado. Verifique suas credenciais.");
       });
-  };
+  };*/
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin(formData);
+  }
 
   // Habilita validação do formulário
   useEffect(() => {
