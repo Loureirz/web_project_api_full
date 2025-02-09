@@ -10,7 +10,6 @@ function Header({ loggedIn, userEmail, handleLogout }) {
 
   const signOut = () => {
     handleLogout();
-    localStorage.removeItem("jwt");
     navigate("/signin");
   };
 
