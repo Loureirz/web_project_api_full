@@ -10,13 +10,6 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
   // Obtendo o usuário logado
   const { currentUser } = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    if (!isOpen) {
-      setName('');
-      setLink('');
-    }
-  }, [isOpen]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -52,7 +45,12 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
     setLink('');
 };
 
-
+useEffect(() => {
+  if (!isOpen) {
+    setName('');
+    setLink('');
+  }
+}, [isOpen]);
 
   return (
     <Popup
