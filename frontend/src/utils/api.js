@@ -101,8 +101,6 @@ class Api {
               return res.json();
             }
             
-            const errorData = await res.json().catch(() => null);
-            return Promise.reject(errorData?.message || `Erro: ${res.status}`);
           })
           .catch((error) => {
             console.error("Erro ao adicionar card:", error);
