@@ -94,7 +94,7 @@ function App() {
 
     const handleUpdateAvatar = async (data) => {
       try {
-        const newData = await api.editAvatar(data.avatar);
+        const newData = await api.editAvatar({ avatar: data.avatar });
         console.log("Avatar atualizado da API:", newData); // Verifica o retorno da API
         setCurrentUser(newData); // Atualiza o usuário localmente
         closeAllPopups(); // Fecha o popup
