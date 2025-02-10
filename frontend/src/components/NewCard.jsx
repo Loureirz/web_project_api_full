@@ -82,9 +82,8 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
         className="formcard__submit"
         type="submit"
         name="card"
-        disabled={isSubmitting || !currentUser?._id} // Desativa o botão se o usuário não estiver autenticado
       >
-        {isSubmitting ? "Criando..." : "Criar"}
+        Criar
       </button>
     </Popup>
   );
