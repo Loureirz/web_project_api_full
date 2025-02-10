@@ -160,7 +160,7 @@ function App() {
       
       const updatedCards = await api.getInitialCards();
       console.log(updatedCards);
-      setCards(updatedCards.data);
+      setCards(updatedCards);
       
       closeAllPopups();
     } catch (error) {
