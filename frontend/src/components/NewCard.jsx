@@ -17,32 +17,30 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
     }
   }, [isOpen]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-  
-    // Verifica se o usuário está autenticado
-    if (!currentUser.data._id) {
-      console.error("Erro: Usuário não autenticado.");
-      return;
+
+    console.log("Valores antes do envio:", { name, link });
+
+    if (!name || !link) {
+        console.error("Erro: Nome ou link não podem estar vazios.");
+        return;
     }
-  
+
     setIsSubmitting(true); // Bloqueia múltiplos envios
-  
-    try {
-      await onAddPlaceSubmit({
-        name,
-        link,
-      });
-  
-      // Limpa os campos após o envio bem-sucedido
-      setName('');
-      setLink('');
-    } catch (error) {
-      console.error("Erro ao enviar formulário:", error);
-    } finally {
-      setIsSubmitting(false); // Libera o botão após o envio
-    }
-  };
+
+    onAddPlaceSubmit({
+      name,
+      link,
+      owner: currentUser?.data?._id, // Certifique-se de que o ID do usuário existe
+    }).finally(() => {
+      setIsSubmitting(false);
+    });
+
+    setName('');
+    setLink('');
+};
+
 
   return (
     <Popup
