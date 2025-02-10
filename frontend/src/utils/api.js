@@ -58,13 +58,14 @@ class Api {
         });
     }
     
-    addCard({name, link}) {
+    addCard({name, link, owner}) {
       return fetch(`${this._baseUrl}/cards`, {
         method: "POST",
         headers: this._getAuthorizationHeaders(),
         body: JSON.stringify({
           name: name,
           link: link,
+          owner: owner,
         }),
       }).then((res) => {
         if (res.ok) {
@@ -72,6 +73,10 @@ class Api {
         }
 
         return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((error) => {
+        console.error("Error ao adicionar card:", error);
+        throw error;
       });
     }
 

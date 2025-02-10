@@ -154,14 +154,16 @@ function App() {
       .catch((error) => console.log("Erro ao deletar o card:", error));
   }
 
-const handleAddPlaceSubmit = (newCardData) => {
-  api.addCard(newCardData)
-    .then((newCard) => {
-      setCards((prevCards) => [newCard, ...prevCards]);
+  const handleAddPlaceSubmit = async (data) => {
+    try {
+      await api.addCard(data.name, data.link, currentUser.data._id);
+      const updatedCards = await api.getInitialCards();
+      setCards(updatedCards.data); 
       closeAllPopups();
-    })
-    .catch((error) => console.error('Erro ao adicionar o cartão:', error));
-};
+    } catch(error) {
+      console.error(error);
+    }
+  }
 
 
   const handleEditAvatarClick = () => {
