@@ -21,10 +21,10 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
     e.preventDefault();
 
     // Aguarda a carga do usuário antes de enviar o formulário
-    if (!currentUser?._id) {
+    /*if (!currentUser?data._id) {
       console.error("Erro: Usuário não autenticado.");
       return;
-    }
+    }*/
 
     setIsSubmitting(true); // Bloqueia múltiplos envios
 
@@ -32,7 +32,7 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
     onAddPlaceSubmit({
       name,
       link,
-      owner: currentUser._id,
+      owner: currentUser.data._id,
     }).finally(() => {
       setIsSubmitting(false); // Libera o botão após o envio
     });
