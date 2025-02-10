@@ -10,16 +10,16 @@ module.exports = {
   },
 
   createCard: (req, res, next) => {
-    const owner = req.user._id;
-    const { name, link } = req.body;
+    const { name, link, owner } = req.body;
+
+    if (!name || !link || !owner) {
+      return res.status(400).send({ message: "Dados inválidos" });
+    }
 
     Card.create({ name, link, owner })
-      .then((card) => res.status(201).json(card))
+      .then((card) => res.send({ data: card }))
       .catch((err) => {
-        if (err.name === "ValidationError") {
-          return res.status(400).json({ error: "Dados inválidos", details: err.message });
-        }
-        next(err);
+        res.status(500).send({ message: "Erro no servidor ao criar um card" + err })
       });
   },
 
