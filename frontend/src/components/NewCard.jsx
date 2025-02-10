@@ -32,7 +32,6 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
       await onAddPlaceSubmit({
         name,
         link,
-        owner: currentUser.data._id,
       });
   
       // Limpa os campos após o envio bem-sucedido
