@@ -5,7 +5,8 @@ import Popup from './Popup';
 function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
-  
+  const [isSubmitting, setIsSubmitting] = useState(false); // Evita múltiplos envios
+
   // Obtendo o usuário logado
   const { currentUser } = useContext(CurrentUserContext);
 
@@ -19,17 +20,21 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Verifica se currentUser está carregado corretamente
+    // Aguarda a carga do usuário antes de enviar o formulário
     if (!currentUser?._id) {
       console.error("Erro: Usuário não autenticado.");
       return;
     }
+
+    setIsSubmitting(true); // Bloqueia múltiplos envios
 
     // Agora enviamos também o owner para a API
     onAddPlaceSubmit({
       name,
       link,
       owner: currentUser._id,
+    }).finally(() => {
+      setIsSubmitting(false); // Libera o botão após o envio
     });
 
     setName('');
@@ -74,8 +79,9 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
         className="formcard__submit"
         type="submit"
         name="card"
+        disabled={isSubmitting || !currentUser?._id} // Desativa o botão se o usuário não estiver autenticado
       >
-        Criar
+        {isSubmitting ? "Criando..." : "Criar"}
       </button>
     </Popup>
   );
