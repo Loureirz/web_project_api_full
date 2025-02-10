@@ -17,28 +17,32 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
     }
   }, [isOpen]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Aguarda a carga do usuário antes de enviar o formulário
-    /*if (!currentUser?data._id) {
+  
+    // Verifica se o usuário está autenticado
+    if (!currentUser?.data?._id) {
       console.error("Erro: Usuário não autenticado.");
       return;
-    }*/
-
+    }
+  
     setIsSubmitting(true); // Bloqueia múltiplos envios
-
-    // Agora enviamos também o owner para a API
-    onAddPlaceSubmit({
-      name,
-      link,
-      owner: currentUser.data._id,
-    }).finally(() => {
+  
+    try {
+      await onAddPlaceSubmit({
+        name,
+        link,
+        owner: currentUser.data._id,
+      });
+  
+      // Limpa os campos após o envio bem-sucedido
+      setName('');
+      setLink('');
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+    } finally {
       setIsSubmitting(false); // Libera o botão após o envio
-    });
-
-    setName('');
-    setLink('');
+    }
   };
 
   return (

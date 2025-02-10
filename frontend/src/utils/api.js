@@ -58,14 +58,13 @@ class Api {
         });
     }
     
-    addCard({name, link, owner}) {
+    addCard({name, link}) {
       return fetch(`${this._baseUrl}/cards`, {
         method: "POST",
         headers: this._getAuthorizationHeaders(),
         body: JSON.stringify({
           name: name,
           link: link,
-          owner: owner,
         }),
       }).then((res) => {
         if (res.ok) {
