@@ -92,17 +92,17 @@ function App() {
       setLoggedIn(false);
     };
 
-    const handleUpdateAvatar = (data) => {
-      (async () => {
-        await api
-          .editAvatar(data)
-          .then((newData) => {
-            setCurrentUser(newData); // Atualiza o avatar do usuário localmente
-            closeAllPopups(); // Fecha o pop-up após a atualização
-          })
-          .catch((error) => console.error("Erro ao atualizar o avatar:", error));
-      })();
+    const handleUpdateAvatar = async (data) => {
+      try {
+        const newData = await api.editAvatar({ avatar: data.avatar });
+        console.log("Avatar atualizado da API:", newData); // Verifica o retorno da API
+        setCurrentUser(newData); // Atualiza o usuário localmente
+        closeAllPopups(); // Fecha o popup
+      } catch (error) {
+        console.error("Erro ao atualizar o avatar:", error);
+      }
     };
+    
   
 
   const handleCardClick = (card) => {
