@@ -86,17 +86,19 @@ class Api {
       
         console.log("Enviando para a API:", { name, link, owner });
       
-        const requestBody = JSON.stringify({ name, link, owner });
-      
         return fetch(`${this._baseUrl}/cards`, {
           method: "POST",
           headers: {
             ...this._getAuthorizationHeaders(),
             "Content-Type": "application/json",
           },
-          body: requestBody,
+          body: JSON.stringify({
+            name,
+            link,
+            owner,
+          }),
         })
-          .then(async (res) => {
+          .then((res) => {
             if (res.ok) {
               return res.json();
             }

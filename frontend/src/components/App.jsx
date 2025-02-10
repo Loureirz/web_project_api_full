@@ -156,14 +156,11 @@ function App() {
 
   const handleAddPlaceSubmit = async (data) => {
     try {
-      // Passando o 'owner' junto com o 'name' e 'link'
       await api.addCard(data.name, data.link, data.owner);
       
-      // Atualizando os cartões após a adição
       const updatedCards = await api.getInitialCards();
       setCards(updatedCards.data);
       
-      // Fechando os popups após o envio
       closeAllPopups();
     } catch (error) {
       console.error("Erro ao adicionar card:", error);
