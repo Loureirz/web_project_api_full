@@ -40,21 +40,25 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
 
   useEffect(() => {
     const config = getConfig();
+    console.log("🚀 Popup abriu? ", isOpen);
+    console.log("📌 Config usada: ", config);
+
     if (isOpen && formRef.current && config) {
-      const initializeValidation = () => {
-        validatorRef.current = new FormValidator(config, formRef.current);
-        validatorRef.current.enableValidation();
-        validatorRef.current.resetValidation();
-      };
-      
-      if (formRef.current.querySelector(config.submitButtonSelector)) {
-        initializeValidation();
-      } else {
-        console.warn("⚠️ Botão ainda não está disponível. Tentando novamente...");
-        setTimeout(initializeValidation, 500);
-      }
+        console.log("🔍 Procurando botão...", formRef.current.querySelector(config.submitButtonSelector));
+
+        setTimeout(() => {
+            if (formRef.current.querySelector(config.submitButtonSelector)) {
+                console.log("✅ Botão encontrado! Inicializando validação...");
+                validatorRef.current = new FormValidator(config, formRef.current);
+                validatorRef.current.enableValidation();
+                validatorRef.current.resetValidation();
+            } else {
+                console.warn("⚠️ O botão ainda não apareceu no DOM.");
+            }
+        }, 500);
     }
-  }, [isOpen, name]);
+}, [isOpen, name]);
+
   
 
   const handleSubmit = (event) => {
