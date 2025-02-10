@@ -1,9 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Popup from './Popup';
 
 function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+  
+  // Obtendo o usuário logado
+  const { currentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
     if (!isOpen) {
@@ -14,7 +18,20 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddPlaceSubmit({ name, link });
+
+    // Verifica se currentUser está carregado corretamente
+    if (!currentUser?._id) {
+      console.error("Erro: Usuário não autenticado.");
+      return;
+    }
+
+    // Agora enviamos também o owner para a API
+    onAddPlaceSubmit({
+      name,
+      link,
+      owner: currentUser._id,
+    });
+
     setName('');
     setLink('');
   };
