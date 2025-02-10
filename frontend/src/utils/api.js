@@ -80,17 +80,14 @@ class Api {
     }*/
 
       addCard({ name, link, owner }) {
-        // Verificando se o nome e o link estão presentes
         if (!name || !link || !owner) {
           return Promise.reject("Erro: Nome, link ou owner não podem estar vazios.");
         }
       
-        // Montando o corpo da requisição, agora incluindo o 'owner'
+        console.log("Enviando para a API:", { name, link, owner });
+      
         const requestBody = JSON.stringify({ name, link, owner });
       
-        console.log("Enviando requisição com body:", requestBody); // LOG DOS DADOS ENVIADOS
-      
-        // Enviando a requisição POST para a API
         return fetch(`${this._baseUrl}/cards`, {
           method: "POST",
           headers: {
@@ -102,15 +99,15 @@ class Api {
           .then(async (res) => {
             if (res.ok) {
               return res.json();
-            } else {
-              return Promise.reject(`Erro: ${res.status}`);
             }
+            return Promise.reject(`Erro: ${res.status}`);
           })
           .catch((error) => {
             console.error("Erro ao adicionar card:", error);
             throw error;
           });
       }
+      
       
       
 

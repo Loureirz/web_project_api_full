@@ -20,6 +20,8 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    console.log("Valores antes do envio:", { name, link, currentUser });
+
     // Verificando se os campos estão preenchidos
     if (!name || !link) {
         console.error("Erro: Nome ou link não podem estar vazios.");
