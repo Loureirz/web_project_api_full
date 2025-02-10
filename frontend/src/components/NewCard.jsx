@@ -21,7 +21,7 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
     e.preventDefault();
   
     // Verifica se o usuário está autenticado
-    if (!currentUser?.data?._id) {
+    if (!currentUser.data._id) {
       console.error("Erro: Usuário não autenticado.");
       return;
     }

@@ -156,7 +156,7 @@ function App() {
 
   const handleAddPlaceSubmit = async (data) => {
     try {
-      await api.addCard(data.name, data.link, currentUser?.data?._id);
+      await api.addCard(data.name, data.link, data.currentUser._id);
       const updatedCards = await api.getInitialCards();
       setCards(updatedCards.data);
       closeAllPopups();

@@ -132,7 +132,7 @@ class Api {
       });
         }
 
-        changeLikeCardStatus(cardId, isLiked) {
+      changeLikeCardStatus(cardId, isLiked) {
           return isLiked ? this.removeLike(cardId) : this.addLikes(cardId);
         }
     }
