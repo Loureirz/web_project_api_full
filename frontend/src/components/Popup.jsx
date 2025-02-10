@@ -50,7 +50,8 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
       if (formRef.current.querySelector(config.submitButtonSelector)) {
         initializeValidation();
       } else {
-        setTimeout(initializeValidation, 0);
+        console.warn("⚠️ Botão ainda não está disponível. Tentando novamente...");
+        setTimeout(initializeValidation, 500);
       }
     }
   }, [isOpen, name]);
