@@ -58,7 +58,7 @@ class Api {
         });
     }
     
-    addCard({name, link}) {
+    /*addCard({name, link}) {
       return fetch(`${this._baseUrl}/cards`, {
         method: "POST",
         headers: this._getAuthorizationHeaders(),
@@ -77,7 +77,39 @@ class Api {
         console.error("Error ao adicionar card:", error);
         throw error;
       });
-    }
+    }*/
+
+      addCard({ name, link }) {
+        if (!name || !link) {
+          return Promise.reject("Erro: Nome ou link não podem estar vazios.");
+        }
+      
+        const requestBody = JSON.stringify({ name, link });
+      
+        console.log("Enviando requisição com body:", requestBody); // LOG DOS DADOS ENVIADOS
+      
+        return fetch(`${this._baseUrl}/cards`, {
+          method: "POST",
+          headers: {
+            ...this._getAuthorizationHeaders(),
+            "Content-Type": "application/json",
+          },
+          body: requestBody,
+        })
+          .then(async (res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            
+            const errorData = await res.json().catch(() => null);
+            return Promise.reject(errorData?.message || `Erro: ${res.status}`);
+          })
+          .catch((error) => {
+            console.error("Erro ao adicionar card:", error);
+            throw error;
+          });
+      }
+      
 
     addLikes(cardId) {
       return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
