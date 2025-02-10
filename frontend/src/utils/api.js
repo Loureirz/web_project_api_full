@@ -107,9 +107,6 @@ class Api {
             throw error;
           });
       }
-      
-      
-      
 
     addLikes(cardId) {
       return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
