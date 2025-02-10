@@ -68,9 +68,6 @@ const updateProfile = (req, res, next) => {
 };
 
 const updateAvatar = (req, res, next) => {
-  const { avatar } = req.body;
-  const userId = req.user._id;
-
   if (req.user.id !== req.user.id) {
     const error = new Error('Você não tem permissão para editar esse perfil');
     error.statusCode = 403;
@@ -78,24 +75,26 @@ const updateAvatar = (req, res, next) => {
   }
 
   User.findByIdAndUpdate(
-    userId,
-    { avatar },
-    { new: true, runValidators: true }
+    req.user.id,
+    { avatar: req.body.avatar },
+    { new: true, runValidators: true, upsert: true }
   )
-    .then((updatedUser) => {
-      if (!updatedUser) {
-        const error = new Error("Usuário não encontrado");
-        error.statusCode = 404;
-        throw error;
-      }
-      res.status(200).json(updatedUser);
-    })
-    .catch((err) => {
-      if (err.name === "ValidationError") {
-        return res.status(400).json({ error: "Dados inválidos", details: err.message });
-      }
-      next(err);
-    });
+  .orFail(()=>{
+    const error = new Error('Esse usuário não existe');
+    error.statusCode = 404;
+    throw error;
+  })
+   .then(user => res.send({
+     data: user
+   }))
+   .catch(err =>  {
+    const statusCode = err.statusCode || 500;
+    const message = statusCode === 500
+      ? 'Houve um erro no servidor interno'
+      : err.message;
+ 
+    res.status(statusCode).send({ message });
+  });
 };
 
 const login = async (req, res, next) => {
