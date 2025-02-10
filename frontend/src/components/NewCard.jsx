@@ -20,8 +20,7 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Valores antes do envio:", { name, link });
-
+    // Verificando se os campos estão preenchidos
     if (!name || !link) {
         console.error("Erro: Nome ou link não podem estar vazios.");
         return;
@@ -29,17 +28,28 @@ function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
 
     setIsSubmitting(true); // Bloqueia múltiplos envios
 
+    // Pegando o ID do usuário (owner)
+    const owner = currentUser?.data?._id; // Certificando-se de que o ID está disponível
+
+    // Verificando se o ID do usuário existe
+    if (!owner) {
+      console.error("Erro: ID do usuário não encontrado.");
+      return;
+    }
+
+    // Envia os dados do cartão para a API
     onAddPlaceSubmit({
       name,
       link,
-      owner: currentUser?.data?._id, // Certifique-se de que o ID do usuário existe
+      owner, // Envia o ID do usuário como 'owner'
     }).finally(() => {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // Libera o botão após o envio
     });
 
     setName('');
     setLink('');
 };
+
 
 
   return (
