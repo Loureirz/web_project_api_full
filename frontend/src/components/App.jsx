@@ -115,7 +115,7 @@ function App() {
   
     api
       .changeLikeCardStatus(card._id, isLiked)
-      .then((updatedCard) => {
+      .then((newCard) => {
   
         // Atualiza o estado de cards, substituindo apenas o card que mudou
         setCards((prevCards) => {
@@ -125,10 +125,10 @@ function App() {
           
           // Retorna uma nova lista de cards, substituindo apenas o card atualizado
           const updatedCards = prevCards.map((c) => 
-            c._id === card._id ? updatedCard : c
+            c._id === card._id ? newCard : c
           );
 
-          return setCards(updatedCards);
+          return updatedCards;
         });
       })
       .catch((error) => console.log("Erro ao atualizar o like:", error));
