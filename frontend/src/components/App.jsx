@@ -110,7 +110,7 @@ function App() {
   }
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((item) => item === currentUser.data._id);
+    const isLiked = card.likes.some((item) => item === currentUser._id);
     console.log(currentUser.data._id);
   
     api
@@ -142,18 +142,19 @@ function App() {
 
   // Função chamada após confirmação
   function confirmDelete() {
-    if (!cardToDelete) return; // Verificação de segurança para evitar chamadas desnecessárias
+    if (!cardToDelete) return;
   
     api
-      .removeCard(cardToDelete._id) // Chama a API para deletar o card
-      .then(() => {
-        setCards((state) => state.filter((c) => c._id !== cardToDelete._id)); // Remove o card do estado
-  
-        setCardToDelete(null); // Limpa o card selecionado
-        setIsConfirmationPopupOpen(false); // Fecha o popup de confirmação
+      .removeCard(cardToDelete._id)
+      .then(() => api.getInitialCards()) // Busca os cards atualizados do servidor
+      .then((updatedCards) => {
+        setCards(updatedCards); // Atualiza os cards no estado
+        setCardToDelete(null);
+        setIsConfirmationPopupOpen(false);
       })
       .catch((error) => console.log("Erro ao deletar o card:", error));
   }
+  
 
   const handleAddPlaceSubmit = async (data) => {
     try {
