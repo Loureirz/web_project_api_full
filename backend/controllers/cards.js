@@ -44,7 +44,7 @@ module.exports = {
   likeCard: (req, res, next) => {
     Card.findByIdAndUpdate(
       req.params.cardId,
-      { $addToSet: { likes: req.user._id } },
+      { $addToSet: { likes: req.user.id } },
       { new: true }
     )
       .orFail(() => {
@@ -64,7 +64,7 @@ module.exports = {
   dislikeCard: (req, res, next) => {
     Card.findByIdAndUpdate(
       req.params.cardId,
-      { $pull: { likes: req.user._id } },
+      { $pull: { likes: req.user.id } },
       { new: true }
     )
       .orFail(() => {
