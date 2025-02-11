@@ -202,7 +202,7 @@ function App() {
           setCurrentUser(data);
           navigate("/");
           api.getInitialCards().then(data=>{
-            setCards(data);
+            setCards(data.data);
           })
         }).catch(err => {
           console.error("Erro na verificação do token:", err);
