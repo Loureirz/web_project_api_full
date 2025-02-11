@@ -110,7 +110,7 @@ function App() {
   }
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((like) => like._id === currentUser.data._id);
+    const isLiked = card.likes.some((item) => item === currentUser.data._id);
     console.log(currentUser.data._id);
   
     api
