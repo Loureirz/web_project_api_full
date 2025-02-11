@@ -109,7 +109,7 @@ function App() {
     setSelectedCard(card)
   }
 
-  const handleCardLike = (card) => {
+  /*const handleCardLike = (card) => {
     const isLiked = card.likes.some((item) => item === currentUser.data._id);
   
     api
@@ -131,7 +131,19 @@ function App() {
         });
       })
       .catch((error) => console.log("Erro ao atualizar o like:", error));
-  };
+  };*/
+
+  const handleCardLike = async (card) => {
+    try {
+    const isLiked = card.likes.some((item) => item === currentUser.data._id);
+
+    const newCard = await api.changeLikeCardStatus(card._id, isLiked);
+    setCards(newCard);
+    } catch (error) {
+      console.error("Erro ao atualizar o like:", error);
+    }
+    
+  }
   
 
   function handleDeleteClick(card) {
