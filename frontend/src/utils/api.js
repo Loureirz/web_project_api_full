@@ -137,7 +137,7 @@ class Api {
     }
 
     removeCard(cardId) {
-      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
         method: "DELETE",
         headers: this._getAuthorizationHeaders(),
       }).then((res) => {
