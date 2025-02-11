@@ -128,7 +128,7 @@ function App() {
             c._id === card._id ? updatedCard : c
           );
 
-          return updatedCards;
+          return setCards(updatedCards);
         });
       })
       .catch((error) => console.log("Erro ao atualizar o like:", error));
@@ -202,7 +202,7 @@ function App() {
           setCurrentUser(data);
           navigate("/");
           api.getInitialCards().then(data=>{
-            setCards(data.data);
+            setCards(data);
           })
         }).catch(err => {
           console.error("Erro na verificação do token:", err);
