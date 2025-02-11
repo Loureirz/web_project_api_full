@@ -111,17 +111,28 @@ function App() {
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((like) => like._id === currentUser.data._id);
+    console.log(currentUser.data._id);
   
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then((updatedCard) => {
-        setCards((prevCards) =>
-          prevCards.map((c) => (c._id === card._id ? updatedCard : c))
-        );
+  
+        // Atualiza o estado de cards, substituindo apenas o card que mudou
+        setCards((prevCards) => {
+          if (prevCards.length === 0) {
+            return prevCards; // Retorna o estado anterior sem mudanças
+          }
+          
+          // Retorna uma nova lista de cards, substituindo apenas o card atualizado
+          const updatedCards = prevCards.map((c) => 
+            c._id === card._id ? updatedCard : c
+          );
+
+          return updatedCards;
+        });
       })
       .catch((error) => console.log("Erro ao atualizar o like:", error));
   };
-  
   
 
   function handleDeleteClick(card) {
