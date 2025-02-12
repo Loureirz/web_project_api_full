@@ -49,7 +49,7 @@ export default function Main({cards, onEditAvatarClick, isEditAvatarPopupOpen, o
       </section>
       <div className="elements">
       {cards.map(card => (
-        <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} userId={currentUser} />
+        <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} />
       ))}
       </div>
 
