@@ -207,7 +207,6 @@ function App() {
       if (jwt) {
         // Se o token existir, verifica a autenticidade
         auth.checkToken(jwt).then((data) => {
-          console.log("Usuário autenticado:", data);
           setLoggedIn(true);
           setUserEmail(data.data.email);
           setCurrentUser(data);

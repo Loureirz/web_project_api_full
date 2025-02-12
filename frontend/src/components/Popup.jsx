@@ -40,8 +40,6 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
 
   useEffect(() => {
     const config = getConfig();
-    console.log("🚀 Popup abriu? ", isOpen);
-    console.log("📌 Config usada: ", config);
 
     if (isOpen && formRef.current && config) {
         console.log("🔍 Procurando botão...", formRef.current.querySelector(config.submitButtonSelector));
