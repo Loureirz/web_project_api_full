@@ -1,12 +1,12 @@
-import { useContext } from "react";
+import React, { useContext } from 'react';
 import trash from "../images/Trash.svg";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Card({ card, onCardClick, onCardLike, onCardDelete, userId }) {
-
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     const { currentUser } = useContext(CurrentUserContext);
+    const { link, name, owner, likes } = card;
 
-    const isOwn = card.owner === userId;
+    const isOwn = card.owner === currentUser;
     const isLiked = card.likes.some((like) => like._id === currentUser.data._id);
 
     const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
@@ -29,9 +29,9 @@ function Card({ card, onCardClick, onCardLike, onCardDelete, userId }) {
             <button type="button" className={cardDeleteButtonClassName} onClick={handleDeleteClick}>
                 <img className="elements__delete-icon" src={trash} alt="delete button icon" />
             </button>
-            <img className="elements__card-image" src={card.link} alt="" onClick={handleClick} />
+            <img className="elements__card-image" src={link} alt="" onClick={handleClick} />
             <div className="elements__wrapper-text-and-like-button">
-                <p className="elements__card-name">{card.name}</p>
+                <p className="elements__card-name">{name}</p>
                 <div className="elements__like">
                     <button 
                         id="likeButton" 
@@ -39,7 +39,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete, userId }) {
                         className={cardLikeButtonClassName}
                         onClick={handleCardLike}>
                     </button>
-                    <p className="elements__like-counter">{isLiked.length}</p>
+                    <p className="elements__like-counter">{likes.length}</p>
                 </div>
             </div>
         </div>
