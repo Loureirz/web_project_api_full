@@ -7,7 +7,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     const { link, name, owner, likes } = card;
 
     const isOwn = owner._id === currentUser.data._id;
-    const isLiked = currentUser?.data?._id && card.likes.some((like) => like._id === currentUser.data._id);
+    const isLiked = currentUser?.data?._id && card.likes.some((like) => like === currentUser.data._id);
 
     console.log(currentUser);
     console.log(card.likes);
