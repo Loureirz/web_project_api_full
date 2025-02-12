@@ -9,9 +9,16 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     const isOwn = owner._id === currentUser.data._id;
     const isLiked = currentUser?.data?._id && card.likes.some((like) => like === currentUser.data._id);
 
-    console.log(isOwn);
-    console.log(card);
-    console.log(currentUser.data._id);
+    if (!currentUser || !currentUser.data) {
+        console.log("currentUser ainda não carregado!");
+        return null;
+      }      
+
+    console.log("owner:", owner);  
+    console.log("currentUser.data:", currentUser.data);
+    console.log("owner._id:", owner ? owner._id : "owner indefinido");
+    console.log("currentUser.data._id:", currentUser.data ? currentUser.data._id : "currentUser indefinido");
+
 
     const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
     const cardDeleteButtonClassName = `elements__delete-button ${isOwn ? "elements__delete-button-hidden" : ""}`;
