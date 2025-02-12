@@ -105,7 +105,7 @@ function App() {
     
   
 
-  const handleCardClick = (card) => {
+  /*const handleCardClick = (card) => {
     setSelectedCard(card)
   }
 
@@ -131,9 +131,9 @@ function App() {
         });
       })
       .catch((error) => console.log("Erro ao atualizar o like:", error));
-  };
+  };*/
 
-  /*const handleCardLike = async (card) => {
+  const handleCardLike = async (card) => {
     try {
     const isLiked = card.likes.some((item) => item === currentUser.data._id);
 
@@ -143,7 +143,7 @@ function App() {
       console.error("Erro ao atualizar o like:", error);
     }
     
-  }*/
+  }
   
 
   function handleDeleteClick(card) {
