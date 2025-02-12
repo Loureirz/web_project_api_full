@@ -17,7 +17,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
     const isLiked = card.likes.some((like) => like._id === currentUser.data._id);
     console.log("ID do usuário:", currentUser.data._id);
-    console.log("Likes do card:", card.likes);
+    console.log("Likes do card:", card.likes.length);
     console.log("Curtido?", isLiked);
 
 
