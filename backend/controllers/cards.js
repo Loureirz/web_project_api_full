@@ -4,7 +4,7 @@ module.exports = {
 
   listCards: (req, res, next) => {
     Card.find({})
-      .populate(["owner", "likes"])
+      .populate(["owner"])
       .then((cards) => res.status(200).json(cards))
       .catch(next);
   },
