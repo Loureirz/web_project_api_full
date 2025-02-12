@@ -14,7 +14,12 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     console.log("currentUser carregado:", currentUser);
 
     const isOwn = (typeof owner === "object" ? owner._id : owner) === currentUser.data._id;
+
     const isLiked = card.likes.some((like) => like._id === currentUser.data._id);
+    console.log("ID do usuário:", currentUser.data._id);
+    console.log("Likes do card:", card.likes);
+    console.log("Curtido?", isLiked);
+
 
     const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
     const cardDeleteButtonClassName = `elements__delete-button ${isOwn ? "elements__delete-button-hidden" : ""}`;
