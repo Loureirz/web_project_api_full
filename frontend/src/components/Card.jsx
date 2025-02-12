@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import trash from "../images/Trash.svg";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete, userId }) {
 
+    const { currentUser } = useContext(CurrentUserContext);
+
     const isOwn = card.owner === userId;
-    const isLiked = card.likes.some((like) => like._id === userId.data._id);
+    const isLiked = card.likes.some((like) => like._id === currentUser.data._id);
 
     const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
     const cardDeleteButtonClassName = `elements__delete-button ${isOwn ? "elements__delete-button-hidden" : ""}`;
