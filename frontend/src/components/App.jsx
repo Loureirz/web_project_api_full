@@ -105,11 +105,11 @@ function App() {
     
   
 
-  /*const handleCardClick = (card) => {
+  const handleCardClick = (card) => {
     setSelectedCard(card)
   }
 
-  const handleCardLike = (card) => {
+  /*const handleCardLike = (card) => {
     const isLiked = card.likes.some((item) => item === currentUser.data._id);
   
     api
