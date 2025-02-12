@@ -164,6 +164,7 @@ class Api {
         }
 
       changeLikeCardStatus(cardId, isLiked) {
+        console.log(isLiked);
           return isLiked ? this.removeLike(cardId) : this.addLikes(cardId);
         }
     }
