@@ -168,17 +168,16 @@ function App() {
 
   const handleAddPlaceSubmit = async (data) => {
     try {
-      await api.addCard({ name: data.name, link: data.link, owner: data.owner });
-      
-      const updatedCards = await api.getInitialCards();
-      console.log(updatedCards);
-      setCards(updatedCards);
-      
-      closeAllPopups();
+        const newCard = await api.addCard({ name: data.name, link: data.link, owner: data.owner });
+
+        setCards((prevCards) => [newCard, ...prevCards]); // Adiciona o novo card no início da lista
+
+        closeAllPopups();
     } catch (error) {
-      console.error("Erro ao adicionar card:", error);
+        console.error("Erro ao adicionar card:", error);
     }
-  };
+};
+
   
 
 
