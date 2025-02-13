@@ -156,6 +156,9 @@ function App() {
       const jwt = token.getToken();
       if (jwt) {
         auth.checkToken(jwt).then((data) => {
+          console.log("Estado do usuário:", currentUser);
+console.log("Estado dos dados:", data);
+
               setLoggedIn(true);
               setUserEmail(data.data.email);
               setCurrentUser(data);
