@@ -18,7 +18,6 @@ import * as token from "../utils/token.js";
 import { removeToken } from "../utils/token.js";
 
 function App() {
-
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -27,64 +26,66 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false); 
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState({ email: "" });
   const navigate = useNavigate();
 
-    const handleUpdateUser = async (data) => {
-      try {
-        const newData = await api.editUserInfo({ name: data.name, about: data.about });
-        setCurrentUser(newData);
-        closeAllPopups();
-      } catch (error) {
-        console.error("Erro ao atualizar perfil:", error);
-      }
-    };
+  const handleUpdateUser = async (data) => {
+    try {
+      const newData = await api.editUserInfo({
+        name: data.name,
+        about: data.about,
+      });
+      setCurrentUser(newData);
+      closeAllPopups();
+    } catch (error) {
+      console.error("Erro ao atualizar perfil:", error);
+    }
+  };
 
-    const handleLogin = async (email, password) => {
-      if (!email || !password) {
-        console.error("Erro: Email ou senha não foram fornecidos!");
-        return;
-      }
-    
-      try {
-        const data = await auth.signin(email, password);
-        if (data && data.token) {
-          token.setToken(data.token);
-          setLoggedIn(true);
-          setUserEmail(email);
-          navigate("/");
-        } else {
-          console.error("Erro: Token não encontrado.");
-        }
-      } catch (error) {
-        console.error("Erro ao fazer login:", error);
-      }
-    };    
-    
-    const handleLogout = () => {
-      removeToken();
-      setLoggedIn(false);
-    };
+  const handleLogin = async (email, password) => {
+    if (!email || !password) {
+      console.error("Erro: Email ou senha não foram fornecidos!");
+      return;
+    }
 
-    const handleUpdateAvatar = async (data) => {
-      try {
-        const newData = await api.editAvatar({ avatar: data.avatar });
-        setCurrentUser(newData);
-        closeAllPopups();
-      } catch (error) {
-        console.error("Erro ao atualizar o avatar:", error);
+    try {
+      const data = await auth.signin(email, password);
+      if (data && data.token) {
+        token.setToken(data.token);
+        setLoggedIn(true);
+        setUserEmail(email);
+        navigate("/");
+      } else {
+        console.error("Erro: Token não encontrado.");
       }
-    };
-    
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+    }
+  };
+
+  const handleLogout = () => {
+    removeToken();
+    setLoggedIn(false);
+  };
+
+  const handleUpdateAvatar = async (data) => {
+    try {
+      const newData = await api.editAvatar({ avatar: data.avatar });
+      setCurrentUser(newData);
+      closeAllPopups();
+    } catch (error) {
+      console.error("Erro ao atualizar o avatar:", error);
+    }
+  };
 
   const handleCardClick = (card) => {
-    setSelectedCard(card)
-  }
+    setSelectedCard(card);
+  };
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((item) => item === currentUser.data._id);
-  
+
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
@@ -92,7 +93,7 @@ function App() {
           if (prevCards.length === 0) {
             return prevCards;
           }
-          const updatedCards = prevCards.map((c) => 
+          const updatedCards = prevCards.map((c) =>
             c._id === card._id ? newCard : c
           );
           return updatedCards;
@@ -108,7 +109,7 @@ function App() {
 
   function confirmDelete() {
     if (!cardToDelete) return;
-  
+
     api
       .removeCard(cardToDelete._id)
       .then(() => {
@@ -121,12 +122,18 @@ function App() {
 
   const handleAddPlaceSubmit = async (data) => {
     try {
-      await api.addCard({ name: data.name, link: data.link, owner: data.owner });
-      
+      await api.addCard({
+        name: data.name,
+        link: data.link,
+        owner: data.owner,
+      });
+
       const updatedCards = await api.getInitialCards();
-      const updatedNew = updatedCards.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const updatedNew = updatedCards.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
       setCards(updatedNew);
-      
+
       closeAllPopups();
     } catch (error) {
       console.error("Erro ao adicionar card:", error);
@@ -135,40 +142,45 @@ function App() {
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
-}
+  };
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
-  }
+  };
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
-}
+  };
 
   const closeAllPopups = () => {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setSelectedCard(null);
-  }
+  };
 
   useEffect(() => {
     try {
       const jwt = token.getToken();
       if (jwt) {
-        auth.checkToken(jwt).then((data) => {
-              setLoggedIn(true);
-              setUserEmail(data.data.email);
-              setCurrentUser(data);
-              navigate("/");
-              api.getInitialCards().then(data=>{
-                const updatedNew = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                setCards(updatedNew);
-             })
-        }).catch(err => {
-          console.error("Erro na verificação do token:", err);
-          setLoggedIn(false);
-        });
+        auth
+          .checkToken(jwt)
+          .then((data) => {
+            setLoggedIn(true);
+            setUserEmail(data.data.email);
+            setCurrentUser(data);
+            navigate("/");
+            api.getInitialCards().then((data) => {
+              const updatedNew = data.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+              );
+              setCards(updatedNew);
+            });
+          })
+          .catch((err) => {
+            console.error("Erro na verificação do token:", err);
+            setLoggedIn(false);
+          });
       }
     } catch (error) {
       console.error("Erro ao recuperar token:", error.message);
@@ -178,65 +190,66 @@ function App() {
 
   return (
     <div className="page">
-      <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser, handleUpdateAvatar}}>
-      <Header 
-        loggedIn={loggedIn}
-        userEmail={userEmail}
-        handleLogout={handleLogout}
-      />
-      <Routes>
-      <Route
-    path="/"
-    element={
-      <ProtectedRoute loggedIn={loggedIn}>
-        <Main
-          cards={cards}
-          onEditAvatarClick={handleEditAvatarClick}
-          isEditAvatarPopupOpen={isEditAvatarPopupOpen}
-          onEditProfileClick={handleEditProfileClick}
-          isEditProfilePopupOpen={isEditProfilePopupOpen}
-          onAddPlaceClick={handleAddPlaceClick}
-          isAddPlacePopupOpen={isAddPlacePopupOpen}
-          closeAllPopups={closeAllPopups}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleDeleteClick}
+      <CurrentUserContext.Provider
+        value={{ currentUser, handleUpdateUser, handleUpdateAvatar }}
+      >
+        <Header
+          loggedIn={loggedIn}
+          userEmail={userEmail}
+          handleLogout={handleLogout}
         />
-        </ProtectedRoute>
-    }
-  />
-  <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
-  <Route path="/signup" element={<Register />} />
-  <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-      <EditProfile
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        onUpdateUser={handleUpdateUser}
-      />
-      <EditAvatar
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        onUpdateAvatar={handleUpdateAvatar}
-      />
-      <NewCard
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        onAddPlaceSubmit={handleAddPlaceSubmit}
-      />
-      <ConfirmationPopup
-        isOpen={isConfirmationPopupOpen}
-        onClose={() => setIsConfirmationPopupOpen(false)}
-        onConfirmationSubmit={confirmDelete}
-      />
-      {selectedCard && (
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-      )}
-      <Footer />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Main
+                  cards={cards}
+                  onEditAvatarClick={handleEditAvatarClick}
+                  isEditAvatarPopupOpen={isEditAvatarPopupOpen}
+                  onEditProfileClick={handleEditProfileClick}
+                  isEditProfilePopupOpen={isEditProfilePopupOpen}
+                  onAddPlaceClick={handleAddPlaceClick}
+                  isAddPlacePopupOpen={isAddPlacePopupOpen}
+                  closeAllPopups={closeAllPopups}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleDeleteClick}
+                />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/signup" element={<Register />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <EditProfile
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
+        <EditAvatar
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+        <NewCard
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+        />
+        <ConfirmationPopup
+          isOpen={isConfirmationPopupOpen}
+          onClose={() => setIsConfirmationPopupOpen(false)}
+          onConfirmationSubmit={confirmDelete}
+        />
+        {selectedCard && (
+          <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        )}
+        <Footer />
       </CurrentUserContext.Provider>
-  </div>
+    </div>
   );
-
 }
 
 export default App;
