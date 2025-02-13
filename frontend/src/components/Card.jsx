@@ -6,7 +6,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     const { currentUser } = useContext(CurrentUserContext);
     const { link, name, owner, likes } = card;
 
-    const isOwn = currentUser.data._id;
+    const isOwn = owner?._id === currentUser?.data?._id;
     const isLiked = currentUser?.data?._id && card.likes.some((like) => like === currentUser.data._id);
 
     if (!currentUser || !currentUser.data) {
@@ -18,6 +18,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     console.log("currentUser.data:", currentUser.data);
     console.log("owner._id:", owner ? owner._id : "owner indefinido");
     console.log("currentUser.data._id:", currentUser.data ? currentUser.data._id : "currentUser indefinido");
+    console.log("isOwn:", isOwn);
 
 
     const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;

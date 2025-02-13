@@ -212,7 +212,6 @@ function App() {
           setCurrentUser(data);
           navigate("/");
           api.getInitialCards().then(data=>{
-            console.log(setCards.data)
             setCards(data);
           })
         }).catch(err => {
