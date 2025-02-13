@@ -1,4 +1,4 @@
-import { useState, useContext, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import Popup from './Popup';
 
 export default function EditAvatar({ isOpen, onClose, onUpdateAvatar }) {
