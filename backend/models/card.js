@@ -14,7 +14,6 @@ const cardSchema = new Schema({
     required: true,
     validate: {
       validator: function (v) {
-        console.log("Validando URL do cartão:", v);
         return linkValid.test(v);
       },
       message: (props) => `"${props.value}" não é um link válido.`,

@@ -21,7 +21,6 @@ const userSchema = new Schema({
     default: "https://practicum-content.s3.us-west-1.amazonaws.com/resources/moved_avatar_1604080799.jpg",
     validate: {
       validator: function (v) {
-        console.log("Validando URL:", v);
         return linkValid.test(v);
       },
       message: (props) => `"${props.value}" não é um link válido.`,
