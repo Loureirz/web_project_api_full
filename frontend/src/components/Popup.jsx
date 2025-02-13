@@ -42,24 +42,23 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
     console.log("Children dentro do form:", formRef.current?.innerHTML);
   
     const config = getConfig();
+    console.log("Config usada:", config);
   
     if (isOpen && formRef.current && config) {
-      const observer = new MutationObserver(() => {
-        const submitButton = formRef.current.querySelector(config.submitButtonSelector);
-        if (submitButton) {
-          observer.disconnect();
-          console.log("Botão encontrado com MutationObserver:", submitButton);
-          validatorRef.current = new FormValidator(config, formRef.current);
-          validatorRef.current.enableValidation();
-          validatorRef.current.resetValidation();
-        }
-      });
+      const submitButton = formRef.current.querySelector(config.submitButtonSelector);
+      console.log("Botão encontrado pelo seletor:", submitButton);
   
-      observer.observe(formRef.current, { childList: true, subtree: true });
+      if (!submitButton) {
+        console.error("O seletor do botão de submit pode estar incorreto!");
+        return;
+      }
   
-      return () => observer.disconnect();
+      validatorRef.current = new FormValidator(config, formRef.current);
+      validatorRef.current.enableValidation();
+      validatorRef.current.resetValidation();
     }
   }, [isOpen, name]);
+  
   
   const handleSubmit = (event) => {
     event.preventDefault();
