@@ -44,7 +44,6 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
     if (isOpen && formRef.current && config) {
       setTimeout(() => {
         const submitButton = formRef.current.querySelector(config.submitButtonSelector);
-        console.log("Botão encontrado:", submitButton);
   
         if (submitButton && !submitButton.disabled) {
           // Se o botão estiver presente e habilitado, inicialize o validador
