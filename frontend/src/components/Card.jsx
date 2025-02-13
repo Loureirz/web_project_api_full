@@ -11,8 +11,8 @@ if (!currentUser || !currentUser.data) {
   return null;
 }
 
-const isOwn = owner?._id === currentUser?.data?._id;
-    const isLiked = currentUser?.data?._id && card.likes.some((like) => like === currentUser.data._id);
+    const isOwn = owner?._id === currentUser?.data?._id;
+    const isLiked = currentUser?.data?._id && card.likes.some((like) => like);
 
 console.log("Propriedade 'owner' do card:", owner); // Verifique o valor de 'owner'
 console.log("ID do currentUser:", currentUser?.data?._id); // Verifique o ID do currentUser
