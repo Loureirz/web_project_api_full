@@ -44,24 +44,23 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
     console.log("Config usada:", config);
   
     if (isOpen && formRef.current && config) {
-      // Tente procurar o botão de submit de imediato
-      const submitButton = formRef.current.querySelector(config.submitButtonSelector);
-      console.log("Botão encontrado:", submitButton);
+      setTimeout(() => {
+        const submitButton = formRef.current.querySelector(config.submitButtonSelector);
+        console.log("Botão encontrado:", submitButton);
   
-      if (submitButton) {
-        // Se o botão estiver presente, inicialize o validador
-        if (!validatorRef.current) {
-          validatorRef.current = new FormValidator(config, formRef.current);
+        if (submitButton && !submitButton.disabled) {
+          // Se o botão estiver presente e habilitado, inicialize o validador
+          if (!validatorRef.current) {
+            validatorRef.current = new FormValidator(config, formRef.current);
+          }
+          validatorRef.current.enableValidation();
+          validatorRef.current.resetValidation();
+        } else {
+          console.error("Botão de submit ainda está desabilitado ou não encontrado.");
         }
-        validatorRef.current.enableValidation();
-        validatorRef.current.resetValidation();
-      } else {
-        console.error("Botão de submit ainda não existe no DOM!");
-      }
+      }, 200); // Atraso de 200ms para garantir que o DOM esteja pronto
     }
   }, [isOpen, name]);
-  
-  
   
   
   const handleSubmit = (event) => {
