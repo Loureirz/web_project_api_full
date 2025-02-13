@@ -27,15 +27,11 @@ export default function Main({cards, onEditAvatarClick, isEditAvatarPopupOpen, o
           </button>
           <p className="profile__info-text">{currentUser.data.about}</p>
 
-
         </div>
         <button className="profile__button" onClick={onAddPlaceClick}>
           <img src={buttonAddPic} alt="Button Add Image" className="profile__button-add"/>
         </button>
         
-
-        
-
         <div className="popup popup-confirm" id="popup-confirm">
           <div className="overlay"></div>
           <div className="popup-confirm__element" >
