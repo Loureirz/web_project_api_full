@@ -47,17 +47,16 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
     if (isOpen && formRef.current && config) {
       setTimeout(() => {
         const submitButton = formRef.current.querySelector(config.submitButtonSelector);
-        console.log("Botão encontrado pelo seletor:", submitButton);
+        console.log("Botão encontrado:", submitButton);
   
-        if (!submitButton) {
-          console.error("O botão de submit ainda não foi renderizado!");
-          return;
+        if (submitButton) {
+          validatorRef.current = new FormValidator(config, formRef.current);
+          validatorRef.current.enableValidation();
+          validatorRef.current.resetValidation();
+        } else {
+          console.error("Botão de submit ainda não existe no DOM!");
         }
-  
-        validatorRef.current = new FormValidator(config, formRef.current);
-        validatorRef.current.enableValidation();
-        validatorRef.current.resetValidation();
-      }, 100); // Pequeno atraso de 100ms
+      }, 500);
     }
   }, [isOpen, name]);  
   
