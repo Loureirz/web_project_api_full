@@ -30,34 +30,10 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false); 
   const [userEmail, setUserEmail] = useState({ email: "" });
   const navigate = useNavigate();
-  
-    /*const handleUpdateUser = (userData) => {
-      if (!userData.name || !userData.about) {
-        console.log('Erro: nome ou descrição ausentes');
-        return; // Não envia a requisição se os dados estiverem incompletos
-      }
-    
-      api.editUserInfo(userData)
-        .then((userInfo) => {
-          setCurrentUser(userInfo); // Atualiza os dados do usuário
-          closeAllPopups(); // Fecha o popup
-        })
-        .catch((error) => {
-          console.log('Erro ao atualizar o perfil:', error);
-        });
-    };
-
-    const handleLogin = (email) => {
-      setLoggedIn(true);
-      setUserEmail(email);
-      localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("userEmail", email);
-    };*/
 
     const handleUpdateUser = async (data) => {
       try {
         const newData = await api.editUserInfo({ name: data.name, about: data.about });
-        console.log("Usuário atualizado da API:", newData); // Verifica o retorno da API
         setCurrentUser(newData);
         closeAllPopups();
       } catch (error) {
@@ -74,8 +50,7 @@ function App() {
       try {
         const data = await auth.signin(email, password);
         if (data && data.token) {
-          token.setToken(data.token);  // Aqui está o armazenamento do token.
-          console.log("Token armazenado:", token.getToken());
+          token.getToken();
           setLoggedIn(true);
           setUserEmail(email);
           navigate("/");
@@ -95,15 +70,13 @@ function App() {
     const handleUpdateAvatar = async (data) => {
       try {
         const newData = await api.editAvatar({ avatar: data.avatar });
-        console.log("Avatar atualizado da API:", newData); // Verifica o retorno da API
-        setCurrentUser(newData); // Atualiza o usuário localmente
-        closeAllPopups(); // Fecha o popup
+        setCurrentUser(newData);
+        closeAllPopups();
       } catch (error) {
         console.error("Erro ao atualizar o avatar:", error);
       }
     };
     
-  
 
   const handleCardClick = (card) => {
     setSelectedCard(card)
@@ -115,53 +88,33 @@ function App() {
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
-  
-        // Atualiza o estado de cards, substituindo apenas o card que mudou
         setCards((prevCards) => {
           if (prevCards.length === 0) {
-            return prevCards; // Retorna o estado anterior sem mudanças
+            return prevCards;
           }
-          
-          // Retorna uma nova lista de cards, substituindo apenas o card atualizado
           const updatedCards = prevCards.map((c) => 
             c._id === card._id ? newCard : c
           );
-
           return updatedCards;
         });
       })
       .catch((error) => console.log("Erro ao atualizar o like:", error));
   };
 
-  /*const handleCardLike = async (card) => {
-    try {
-    const isLiked = card.likes.some((item) => item === currentUser.data._id);
-
-    const newCard = await api.changeLikeCardStatus(card._id, isLiked);
-    setCards(newCard);
-    } catch (error) {
-      console.error("Erro ao atualizar o like:", error);
-    }
-    
-  }*/
-  
-
   function handleDeleteClick(card) {
-    setCardToDelete(card); // Define o card a ser excluído
-    setIsConfirmationPopupOpen(true); // Abre o popup de confirmação
+    setCardToDelete(card);
+    setIsConfirmationPopupOpen(true);
   }
 
-  // Função chamada após confirmação
   function confirmDelete() {
-    if (!cardToDelete) return; // Verificação de segurança para evitar chamadas desnecessárias
+    if (!cardToDelete) return;
   
     api
-      .removeCard(cardToDelete._id) // Chama a API para deletar o card
+      .removeCard(cardToDelete._id)
       .then(() => {
-        setCards((state) => state.filter((c) => c._id !== cardToDelete._id)); // Remove o card do estado
-  
-        setCardToDelete(null); // Limpa o card selecionado
-        setIsConfirmationPopupOpen(false); // Fecha o popup de confirmação
+        setCards((state) => state.filter((c) => c._id !== cardToDelete._id));
+        setCardToDelete(null);
+        setIsConfirmationPopupOpen(false);
       })
       .catch((error) => console.log("Erro ao deletar o card:", error));
   }
@@ -171,7 +124,6 @@ function App() {
       await api.addCard({ name: data.name, link: data.link, owner: data.owner });
       
       const updatedCards = await api.getInitialCards();
-      console.log(updatedCards);
       setCards(updatedCards);
       
       closeAllPopups();
@@ -179,8 +131,6 @@ function App() {
       console.error("Erro ao adicionar card:", error);
     }
   };
-  
-
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -203,17 +153,16 @@ function App() {
 
   useEffect(() => {
     try {
-      const jwt = token.getToken();  // Tenta obter o token
+      const jwt = token.getToken();
       if (jwt) {
-        // Se o token existir, verifica a autenticidade
         auth.checkToken(jwt).then((data) => {
-          setLoggedIn(true);
-          setUserEmail(data.data.email);
-          setCurrentUser(data);
-          navigate("/");
-          api.getInitialCards().then(data=>{
-            setCards(data);
-          })
+              setLoggedIn(true);
+              setUserEmail(data.data.email);
+              setCurrentUser(data);
+              navigate("/");
+              api.getInitialCards().then(data=>{
+              setCards(data);
+             })
         }).catch(err => {
           console.error("Erro na verificação do token:", err);
           setLoggedIn(false);
