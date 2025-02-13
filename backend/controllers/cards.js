@@ -2,7 +2,7 @@ const Card = require("../models/card");
 
 module.exports = {
 
-  listCards: (res, next) => {
+  listCards: (req, res, next) => {
     Card.find({})
       .populate(["owner"])
       .then((cards) => res.status(200).json(cards))
