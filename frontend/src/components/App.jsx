@@ -85,11 +85,13 @@ function App() {
 
   const handleCardLike = (card) => {
     const changeLiked = card.likes.some((item) => item === currentUser.data._id);
+    console.log(changeLiked);
 
     api
       .changeLikeCardStatus(card._id, changeLiked)
       .then((newCard) => {
         setCards((prevCards) => {
+          console.log(newCard);
           if (prevCards.length === 0) {
             return prevCards;
           }
