@@ -40,18 +40,23 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
 
   useEffect(() => {
     const config = getConfig();
-
+  
     if (isOpen && formRef.current && config) {
-        formRef.current.querySelector(config.submitButtonSelector);
-
-        setTimeout(() => {
-                formRef.current.querySelector(config.submitButtonSelector);
-                validatorRef.current = new FormValidator(config, formRef.current);
-                validatorRef.current.enableValidation();
-                validatorRef.current.resetValidation();
-             }, 500);
+      setTimeout(() => {
+        const submitButton = formRef.current.querySelector(config.submitButtonSelector);
+        console.log("Botão encontrado:", submitButton);
+  
+        if (submitButton) {
+          validatorRef.current = new FormValidator(config, formRef.current);
+          validatorRef.current.enableValidation();
+          validatorRef.current.resetValidation();
+        } else {
+          console.error("Botão de submit ainda não existe no DOM!");
+        }
+      }, 500);
     }
-}, [isOpen, name]);
+  }, [isOpen, name]);
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
