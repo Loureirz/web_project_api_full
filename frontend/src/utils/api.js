@@ -57,34 +57,11 @@ class Api {
           return Promise.reject(error);
         });
     }
-    
-    /*addCard({name, link}) {
-      return fetch(`${this._baseUrl}/cards`, {
-        method: "POST",
-        headers: this._getAuthorizationHeaders(),
-        body: JSON.stringify({
-          name: name,
-          link: link,
-        }),
-      }).then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
 
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((error) => {
-        console.error("Error ao adicionar card:", error);
-        throw error;
-      });
-    }*/
-
-      addCard({ name, link, owner }) {
+    addCard({ name, link, owner }) {
         if (!name || !link || !owner) {
           return Promise.reject("Erro: Nome, link ou owner não podem estar vazios.");
         }
-      
-        console.log("Enviando para a API:", { name, link, owner });
       
         return fetch(`${this._baseUrl}/cards`, {
           method: "POST",
@@ -164,7 +141,6 @@ class Api {
         }
 
       changeLikeCardStatus(cardId, isLiked) {
-        console.log(isLiked);
           return isLiked ? this.removeLike(cardId) : this.addLikes(cardId);
         }
     }
