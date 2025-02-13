@@ -42,14 +42,14 @@
   background: none;
   border: none;
   cursor: pointer;
-  visibility: hidden;
-  opacity: 0;
+  visibility: visible;
+  opacity: 1;
   transition: 0.2s;
 }
 
 .elements__delete-button-hidden {
-  visibility: visible;
-  opacity: 1;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .elements__delete-button-hidden:hover {
