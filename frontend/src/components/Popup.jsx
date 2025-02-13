@@ -45,19 +45,19 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
     console.log("Config usada:", config);
   
     if (isOpen && formRef.current && config) {
-      setTimeout(() => {
+      const interval = setInterval(() => {
         const submitButton = formRef.current.querySelector(config.submitButtonSelector);
-        console.log("Botão encontrado pelo seletor:", submitButton);
+        if (submitButton) {
+          console.log("Botão encontrado pelo seletor:", submitButton);
+          clearInterval(interval);
   
-        if (!submitButton) {
-          console.error("O botão de submit ainda não foi renderizado!");
-          return;
+          validatorRef.current = new FormValidator(config, formRef.current);
+          validatorRef.current.enableValidation();
+          validatorRef.current.resetValidation();
         }
+      }, 50); // Verifica a cada 50ms
   
-        validatorRef.current = new FormValidator(config, formRef.current);
-        validatorRef.current.enableValidation();
-        validatorRef.current.resetValidation();
-      }, 100); // Pequeno atraso de 100ms
+      return () => clearInterval(interval);
     }
   }, [isOpen, name]);  
   
