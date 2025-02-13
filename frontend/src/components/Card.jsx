@@ -13,12 +13,10 @@ if (!currentUser || !currentUser.data) {
 
     const isOwn = currentUser?.data?._id;
     const isLiked = currentUser?.data?._id && card.likes.some((like) => like);
+    console.log(isLiked);
 
-const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
-const cardDeleteButtonClassName = `elements__delete-button ${isOwn ? "elements__delete-button-hidden" : ""}`;
-
-console.log("Classe do botão de like:", cardLikeButtonClassName);
-console.log("Classe do botão de delete:", cardDeleteButtonClassName);
+    const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
+    const cardDeleteButtonClassName = `elements__delete-button ${isOwn ? "elements__delete-button-hidden" : ""}`;
 
     function handleClick() {
         onCardClick(card);
