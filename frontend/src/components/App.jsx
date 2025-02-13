@@ -124,7 +124,7 @@ function App() {
       await api.addCard({ name: data.name, link: data.link, owner: data.owner });
       
       const updatedCards = await api.getInitialCards();
-      const updatedNew = updatedCards.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      const updatedNew = updatedCards.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setCards(updatedNew);
       
       closeAllPopups();
@@ -162,7 +162,7 @@ function App() {
               setCurrentUser(data);
               navigate("/");
               api.getInitialCards().then(data=>{
-                const updatedNew = data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                const updatedNew = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setCards(updatedNew);
              })
         }).catch(err => {
