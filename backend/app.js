@@ -9,6 +9,7 @@ const app = express();
 const { requestLogger, errorLogger } = require("./middlewares/logger.js");
 
 app.use(cors());
+app.options('*', cors());
 app.use(express.json());
 
 mongoose.connect(process.env.CONNECTION)
