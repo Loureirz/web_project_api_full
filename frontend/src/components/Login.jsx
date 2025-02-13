@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import InfoTooltip from "./InfoToolTip"; // Certifique-se de que o caminho está correto
-import * as auth from "../utils/auth";
-import FormValidator from "../utils/FormValidator"; // Certifique-se de que este caminho está correto
+import { NavLink } from "react-router-dom";
+import InfoTooltip from "./InfoToolTip";
+import FormValidator from "../utils/FormValidator";
 
 const Login = ({ handleLogin }) => {
   const [formData, setFormData] = useState({
@@ -12,10 +11,8 @@ const Login = ({ handleLogin }) => {
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
-  const formRef = useRef(null); // Referência ao formulário
+  const formRef = useRef(null);
 
-  // Configurações para validação do formulário
   const configLoginValidate = {
     inputSelector: ".auth__input",
     submitButtonSelector: ".auth__button",
@@ -24,49 +21,16 @@ const Login = ({ handleLogin }) => {
     errorClassVisible: "auth__input-error_visible",
   };
 
-  // Atualiza os valores do formulário
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  // Submete o formulário para autenticação
-  /*const handleSubmit = (e) => {
-    e.preventDefault();
-    const { email, password } = formData;
-
-    if (!email || !password) {
-      setShowModal(true);
-      setIsSuccess(false);
-      setMessage("Por favor, preencha todos os campos.");
-      console.log("Campos obrigatórios não preenchidos");
-      return;
-    }
-
-
-    auth
-      .signin(email, password)
-      .then((data) => {
-        if (data) {
-          handleLogin(email); // Atualiza o estado global de autenticação
-          localStorage.setItem("jwt", data); // Armazena o token
-          navigate("/"); // Redireciona para a página principal
-        }
-      })
-      .catch((err) => {
-        console.error("Erro no login:", err);
-        setShowModal(true);
-        setIsSuccess(false);
-        setMessage("Ops, algo deu errado. Verifique suas credenciais.");
-      });
-  };*/
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(formData.email, formData.password);
   }
 
-  // Habilita validação do formulário
   useEffect(() => {
     if (formRef.current) {
       const validator = new FormValidator(configLoginValidate, formRef.current);
@@ -76,7 +40,6 @@ const Login = ({ handleLogin }) => {
     }
   }, []);
 
-  // Fecha o modal de mensagem
   const closeModal = () => {
     setShowModal(false);
     setIsSuccess(false);
