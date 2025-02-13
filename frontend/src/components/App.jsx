@@ -121,10 +121,10 @@ function App() {
 
   const handleAddPlaceSubmit = async (data) => {
     try {
-      const newCard = await api.addCard({ name: data.name, link: data.link, owner: data.owner });
+      await api.addCard({ name: data.name, link: data.link, owner: data.owner });
       
       const updatedCards = await api.getInitialCards();
-      setCards([newCard, ...updatedCards]);
+      setCards(updatedCards);
       
       closeAllPopups();
     } catch (error) {
