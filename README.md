@@ -1,10 +1,8 @@
-# Nome do Projeto
+# Projeto Fullstack - Web Project Around
 
-**Projeto Fullstack - Web Project Around Express**
+Link - https://web-project-api-full-vert.vercel.app/
 
-## Link - 
-
-## Vídeo -
+Vídeo -
 
 ---
 
@@ -48,9 +46,3 @@ A aplicação permite que o usuário realize as seguintes ações:
 2. **Login do usuário**
 3. **Visualização de perfis**
 4. **Criação, edição e exclusão de cartões**
-
-Abaixo está um exemplo de como a interface da aplicação pode ser vista:
-
-![Exemplo da Tela de Cadastro]()
-
-![Exemplo da Tela de Cartões]()
