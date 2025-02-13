@@ -39,25 +39,28 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
   };
 
   useEffect(() => {
+    console.log("Children dentro do form:", formRef.current?.innerHTML);
+  
     const config = getConfig();
   
     if (isOpen && formRef.current && config) {
-      setTimeout(() => {
+      const observer = new MutationObserver(() => {
         const submitButton = formRef.current.querySelector(config.submitButtonSelector);
-        console.log("Botão encontrado:", submitButton);
-  
         if (submitButton) {
+          observer.disconnect();
+          console.log("Botão encontrado com MutationObserver:", submitButton);
           validatorRef.current = new FormValidator(config, formRef.current);
           validatorRef.current.enableValidation();
           validatorRef.current.resetValidation();
-        } else {
-          console.error("Botão de submit ainda não existe no DOM!");
         }
-      }, 500);
+      });
+  
+      observer.observe(formRef.current, { childList: true, subtree: true });
+  
+      return () => observer.disconnect();
     }
   }, [isOpen, name]);
   
-
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit(event);
