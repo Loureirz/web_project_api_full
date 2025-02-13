@@ -11,7 +11,7 @@ if (!currentUser || !currentUser.data) {
   return null;
 }
 
-    const isOwn = card.owner === currentUser?.data?._id;
+    const isOwn = card.owner?._id === currentUser?.data?._id;
     const isLiked = currentUser?.data?._id && card.likes.some((like) => like === currentUser.data._id);
 
 console.log("Propriedade 'owner' do card:", owner); // Verifique o valor de 'owner'
@@ -21,9 +21,6 @@ console.log("isLiked:", isLiked); // Verifique se o usuário deu like no card
 
 const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
 const cardDeleteButtonClassName = `elements__delete-button ${isOwn ? "elements__delete-button-hidden" : ""}`;
-
-console.log("Classe do botão de like:", cardLikeButtonClassName);
-console.log("Classe do botão de delete:", cardDeleteButtonClassName);
 
     function handleClick() {
         onCardClick(card);
