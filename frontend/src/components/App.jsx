@@ -124,7 +124,7 @@ function App() {
       await api.addCard({ name: data.name, link: data.link, owner: data.owner });
       
       const updatedCards = await api.getInitialCards();
-      setCards(updatedCards);
+      setCards([updatedCards[0], ...cards]);
       
       closeAllPopups();
     } catch (error) {
