@@ -106,8 +106,6 @@ const login = async (req, res, next) => {
       return next(Object.assign(new Error('E-mail ou senha incorretos'), { statusCode: 401 }));
     }
 
-    console.log("JWT_SECRET:", process.env.JWT_SECRET);
-
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     res.status(200).json({ token });

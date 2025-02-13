@@ -21,6 +21,12 @@ mongoose.connect(process.env.CONNECTION)
 
 const { PORT = 3000 } = process.env;
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('O servidor travará agora');
+  }, 0);
+});
+
 app.use(requestLogger);
 
 app.use(function (req, res, next) {
