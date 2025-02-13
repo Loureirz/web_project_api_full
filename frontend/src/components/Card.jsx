@@ -13,14 +13,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         console.log("currentUser ainda não carregado!");
         return null;
       }      
-
-    console.log("owner:", owner);  
-    console.log("currentUser.data:", currentUser.data);
-    console.log("owner._id:", owner ? owner._id : "owner indefinido");
-    console.log("currentUser.data._id:", currentUser.data ? currentUser.data._id : "currentUser indefinido");
-    console.log("isOwn:", isOwn);
-
-
+      
     const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
     const cardDeleteButtonClassName = `elements__delete-button ${isOwn ? "elements__delete-button-hidden" : ""}`;
 
