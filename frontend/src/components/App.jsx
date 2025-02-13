@@ -96,7 +96,10 @@ function App() {
           const updatedCards = prevCards.map((c) =>
             c._id === card._id ? newCard : c
           );
-          return updatedCards;
+          return updatedCards.map((c) => ({
+            ...c,
+            isOwn: c.owner === currentUser?.data?._id,  // Recalcula o `isOwn` após atualizar os cards
+          }));
         });
       })
       .catch((error) => console.log("Erro ao atualizar o like:", error));
