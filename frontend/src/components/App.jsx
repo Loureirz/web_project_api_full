@@ -50,7 +50,7 @@ function App() {
       try {
         const data = await auth.signin(email, password);
         if (data && data.token) {
-          token.getToken();
+          token.setToken(data.token);
           setLoggedIn(true);
           setUserEmail(email);
           navigate("/");
