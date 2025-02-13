@@ -3,14 +3,14 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Popup from './Popup';
 
 export default function EditProfile({ isOpen, onClose, onUpdateUser }) {
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext); // Obtém o objeto de usuário atual
-  const [name, setName] = useState(""); // Adicione variável de estado para nome
-  const [about, setAbout] = useState(""); // Adicione variável de estado para descrição
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
 
   useEffect(() => {
     if (currentUser) {
-      setName(currentUser.name || ""); // Defina o valor padrão para uma string vazia
-      setAbout(currentUser.about || ""); // Mesmo para o campo 'about'
+      setName(currentUser.name || ""); 
+      setAbout(currentUser.about || "");
     }
   }, [currentUser]);
 
