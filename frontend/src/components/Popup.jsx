@@ -39,23 +39,19 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
   };
 
   useEffect(() => {
-    console.log("Children dentro do form:", formRef.current?.innerHTML);
-  
     const config = getConfig();
-    console.log("Config usada:", config);
   
     if (isOpen && formRef.current && config) {
       const interval = setInterval(() => {
         const submitButton = formRef.current.querySelector(config.submitButtonSelector);
         if (submitButton) {
-          console.log("Botão encontrado pelo seletor:", submitButton);
           clearInterval(interval);
   
           validatorRef.current = new FormValidator(config, formRef.current);
           validatorRef.current.enableValidation();
           validatorRef.current.resetValidation();
         }
-      }, 50); // Verifica a cada 50ms
+      }, 50);
   
       return () => clearInterval(interval);
     }
