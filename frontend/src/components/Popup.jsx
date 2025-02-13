@@ -39,9 +39,7 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
   };
 
   useEffect(() => {
-    console.log("Children dentro do form:", formRef.current?.innerHTML);
     const config = getConfig();
-    console.log("Config usada:", config);
   
     if (isOpen && formRef.current && config) {
       setTimeout(() => {
