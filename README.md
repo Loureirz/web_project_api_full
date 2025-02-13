@@ -2,7 +2,8 @@
 
 Link - https://web-project-api-full-vert.vercel.app/
 
-Vídeo -
+Vídeo - [![Thumbnail do Vídeo](https://img.youtube.com/vi/eK5VV5LNqHg/0.jpg)](https://youtu.be/eK5VV5LNqHg)
+
 
 ---
 
