@@ -2,14 +2,14 @@ const Card = require("../models/card");
 
 module.exports = {
 
-  listCards: (req, res, next) => {
+  listCards: (res, next) => {
     Card.find({})
       .populate(["owner"])
       .then((cards) => res.status(200).json(cards))
       .catch(next);
   },
 
-  createCard: (req, res, next) => {
+  createCard: (req, res) => {
     const { name, link, owner } = req.body;
 
     if (!name || !link || !owner) {
@@ -19,7 +19,7 @@ module.exports = {
     Card.create({ name, link, owner })
       .then((card) => res.send({ data: card }))
       .catch((err) => {
-        res.status(500).send({ message: "Erro no servidor ao criar um card" + err })
+        res.status(500).send({ message: "Erro no servidor ao criar um card" + err });
       });
   },
 

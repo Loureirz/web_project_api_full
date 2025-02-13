@@ -64,7 +64,7 @@ const updateProfile = (req, res, next) => {
         : err.message;
 
     res.status(statusCode).send({ message });
-    })
+    });
 };
 
 const updateAvatar = (req, res, next) => {
