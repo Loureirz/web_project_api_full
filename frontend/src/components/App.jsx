@@ -124,7 +124,8 @@ function App() {
       await api.addCard({ name: data.name, link: data.link, owner: data.owner });
       
       const updatedCards = await api.getInitialCards();
-      setCards(updatedCards);
+      const updatedNew = updatedCards.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      setCards(updatedNew);
       
       closeAllPopups();
     } catch (error) {
@@ -161,7 +162,8 @@ function App() {
               setCurrentUser(data);
               navigate("/");
               api.getInitialCards().then(data=>{
-              setCards(data);
+                const updatedNew = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                setCards(updatedNew);
              })
         }).catch(err => {
           console.error("Erro na verificação do token:", err);
