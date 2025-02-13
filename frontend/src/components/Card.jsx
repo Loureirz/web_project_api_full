@@ -6,13 +6,13 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     const { currentUser } = useContext(CurrentUserContext);
     const { link, name, owner, likes } = card;
 
-    const isOwn = owner?._id === currentUser?.data?._id;
-const isLiked = currentUser?.data?._id && card.likes.some((like) => like === currentUser.data._id);
-
 if (!currentUser || !currentUser.data) {
   console.log("currentUser ainda não carregado!");
   return null;
 }
+
+const isOwn = owner?._id === currentUser?.data?._id;
+    const isLiked = currentUser?.data?._id && card.likes.some((like) => like === currentUser.data._id);
 
 console.log("Propriedade 'owner' do card:", owner); // Verifique o valor de 'owner'
 console.log("ID do currentUser:", currentUser?.data?._id); // Verifique o ID do currentUser
