@@ -5,40 +5,33 @@ import Popup from './Popup';
 function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // Evita múltiplos envios
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Obtendo o usuário logado
   const { currentUser } = useContext(CurrentUserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Valores antes do envio:", { name, link, currentUser });
-
-    // Verificando se os campos estão preenchidos
     if (!name || !link) {
         console.error("Erro: Nome ou link não podem estar vazios.");
         return;
     }
 
-    setIsSubmitting(true); // Bloqueia múltiplos envios
+    setIsSubmitting(true);
 
-    // Pegando o ID do usuário (owner)
-    const owner = currentUser?.data?._id; // Certificando-se de que o ID está disponível
+    const owner = currentUser?.data?._id;
 
-    // Verificando se o ID do usuário existe
     if (!owner) {
       console.error("Erro: ID do usuário não encontrado.");
       return;
     }
 
-    // Envia os dados do cartão para a API
     onAddPlaceSubmit({
       name,
       link,
-      owner, // Envia o ID do usuário como 'owner'
+      owner,
     }).finally(() => {
-      setIsSubmitting(false); // Libera o botão após o envio
+      setIsSubmitting(false);
     });
 
     setName('');
