@@ -154,6 +154,7 @@ function App() {
   useEffect(() => {
     try {
       const jwt = token.getToken();
+      console.log(token.getToken(), jwt);
       if (jwt) {
         auth.checkToken(jwt).then((data) => {
               setLoggedIn(true);
