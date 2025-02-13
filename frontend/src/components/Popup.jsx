@@ -42,22 +42,16 @@ export default function Popup({ name, title, children, isOpen, onClose, onSubmit
     const config = getConfig();
 
     if (isOpen && formRef.current && config) {
-        console.log("🔍 Procurando botão...", formRef.current.querySelector(config.submitButtonSelector));
+        formRef.current.querySelector(config.submitButtonSelector);
 
         setTimeout(() => {
-            if (formRef.current.querySelector(config.submitButtonSelector)) {
-                console.log("✅ Botão encontrado! Inicializando validação...");
+                formRef.current.querySelector(config.submitButtonSelector);
                 validatorRef.current = new FormValidator(config, formRef.current);
                 validatorRef.current.enableValidation();
                 validatorRef.current.resetValidation();
-            } else {
-                console.warn("⚠️ O botão ainda não apareceu no DOM.");
-            }
-        }, 500);
+             }, 500);
     }
 }, [isOpen, name]);
-
-  
 
   const handleSubmit = (event) => {
     event.preventDefault();
