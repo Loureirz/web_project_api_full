@@ -15,6 +15,8 @@ if (!currentUser || !currentUser.data) {
     const isLiked = currentUser?.data?._id && card.likes.some((like) => like);
     console.log(isOwn);
     console.log(currentUser.data._id);
+    console.log(card);
+    console.log(card.data);
 
     const cardLikeButtonClassName = `elements__like-button ${isLiked ? "active" : ""}`;
     const cardDeleteButtonClassName = `elements__delete-button ${isOwn ? "elements__delete-button-hidden" : ""}`;
